@@ -1,0 +1,36 @@
+import java.io.*;
+import java.util.*;
+import java.net.Socket;
+
+
+public class theclient {
+	public static void main(String[] args) {
+		
+	    Socket MyClient = null;
+	    try {
+	           MyClient = new Socket("Alex-Acer", 2000);
+	    }
+	    catch (IOException e) {
+	        System.out.println(e);
+	    }
+	    
+	    DataInputStream input = null;
+	    try {
+	       input = new DataInputStream(serviceSocket.getInputStream());
+	    }
+	    catch (IOException e) {
+	       System.out.println(e);
+	    }
+	    
+	    PrintStream output = null;
+	    try {
+	       output = new PrintStream(serviceSocket.getOutputStream());
+	    }
+	    catch (IOException e) {
+	       System.out.println(e);
+	    }
+	    
+	    
+	}
+
+}

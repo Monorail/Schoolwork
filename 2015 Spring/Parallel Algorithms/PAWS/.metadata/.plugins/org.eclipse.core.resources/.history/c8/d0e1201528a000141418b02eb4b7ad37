@@ -1,0 +1,22 @@
+import java.util.concurrent.Semaphore;
+
+
+public class PrimeTester implements Runnable {
+	int ID;
+	Semaphore sem;
+	int num;
+	int numThreads;
+	public PrimeTester(int ID, Semaphore Sem, int num, int numThreads){
+		this.ID = ID;
+		this.sem = sem;
+		this.num = num;
+		this.numThreads = numThreads;
+	}
+	
+	public void run() {
+		boolean isPrime = (num%2==1);
+		for(int i = Math.max(ID * num / numThreads, 3);i < (1+ID) * num / numThreads;i+=2){
+			
+		}
+	}
+}

@@ -1,0 +1,168 @@
+*******************************error 1.txt:*******************************
+const x = ;
+begin
+	write x;
+end.
+Error 1: = must be followed by a number.
+
+
+*******************************error 2.txt:*******************************
+const  = 3;
+begin
+	write x;
+end.
+Error 2: Identifier must be followed by =.
+
+
+*******************************error 3.txt:*******************************
+int  = 3;
+begin
+	write x;
+end.
+Error 3: const, int, procedure must be followed by identifier.
+
+
+*******************************error 4.txt:*******************************
+const x = 3;
+begin
+	write 
+Error 4: Program not closed with a period.
+
+
+*******************************error 5.txt:*******************************
+const x = 3
+begin
+	write x;
+end.
+Error 5: Semicolon between statements missing.
+
+
+*******************************error 6.txt:*******************************
+const s  3;
+begin
+	write x;
+end.
+Error 6: Assignment operator expected.
+
+
+*******************************error 7.txt:*******************************
+int x;
+begin
+	x := 3;
+	if x > 3 
+	write x;
+end.
+Error 7: then expected.
+
+
+*******************************error 8.txt:*******************************
+int x;
+begin
+	x := 3;
+	while x > 3 
+	write x;
+end.
+Error 8: do expected.
+
+
+*******************************error 9.txt:*******************************
+int x;
+begin
+	x := 3;
+	while x  3 do 
+	write x;
+end.
+Error 9: Relational operator expected.
+
+
+*******************************error 10.txt:*******************************
+int x;
+begin
+	x:= 4;
+	/* this comment was not closed
+end.
+Error 10: Comment was not closed.
+
+
+*******************************error 11.txt:*******************************
+int x;
+begin
+	x := (3;
+end.
+Error 11: Right parenthesis missing.
+
+
+*******************************error 12.txt:*******************************
+int x;
+begin
+	x := 3--3;
+end.
+Error 12: The preceding factor cannot begin with this symbol.
+
+
+*******************************error 13.txt:*******************************
+const x = 3;
+int shayneISAMastaProgramma;
+begin
+
+end.
+Error 13: Identifier too long.
+
+
+*******************************error 14.txt:*******************************
+int x;
+begin
+	x := 3-3;
+.
+Error 14: end expected.
+
+
+*******************************error 15.txt:*******************************
+int x;
+begin
+	call derp;
+	x := 3-3;
+end.
+Error 15: Call not implemented yet
+
+
+*******************************error 16.txt:*******************************
+int x;
+begin
+	x:= 4;
+	x := x $ 2;
+end.
+Error 16: Invalid symbol.
+
+
+*******************************error 17.txt:*******************************
+const x = 5;
+begin
+	x := 100;
+end.
+Error 17: Assignment to constant or procedure is not allowed.
+
+
+*******************************error 18.txt:*******************************
+int x;
+begin
+	x := y;
+end.
+Error 18: Undeclared identifier.
+
+
+*******************************error 19.txt:*******************************
+const 2xc = 3;
+begin
+	write x;
+	
+end.
+Error 19: Invalid identifier.
+
+
+*******************************error 20.txt:*******************************
+int x;
+begin
+	x:= 48840324;
+end.
+Error 20: Number too long.

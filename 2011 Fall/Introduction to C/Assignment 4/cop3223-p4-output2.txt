@@ -1,0 +1,95 @@
+Please enter your choice from one of the following options.
+1. Play the guessing game.
+2. Play the square game.
+3. View your current score.
+4. Quit.
+1
+What do you want the maximum value in the guessing game to be?
+1000000
+Sorry, you chose an invalid maximum, you'll play with a maximum of 100.
+Please enter your guess(1 - 100).
+50
+Sorry your guess is too low.
+Please enter your guess(1 - 100).
+75
+Sorry your guess is too low.
+Please enter your guess(1 - 100).
+90
+Sorry your guess is too high.
+Please enter your guess(1 - 100).
+83
+Sorry your guess is too high.
+Please enter your guess(1 - 100).
+79
+You got the number in 5 turns.
+You scored 9 points for the Guessing Game this time!
+Please enter your choice from one of the following options.
+1. Play the guessing game.
+2. Play the square game.
+3. View your current score.
+4. Quit.
+3
+Your current score is 9.
+Please enter your choice from one of the following options.
+1. Play the guessing game.
+2. Play the square game.
+3. View your current score.
+4. Quit.
+8
+Sorry that is not a valid choice. Please try again.
+Please enter your choice from one of the following options.
+1. Play the guessing game.
+2. Play the square game.
+3. View your current score.
+4. Quit.
+2
+  17  19  18
+   7   9  17
+  14   7   8
+Enter the row(0-2) and column(0-2) of the square you want to change.
+1 0
+What is the new value?
+19
+  17  19  18
+  19   9  17
+  14   7   8
+Enter the row(0-2) and column(0-2) of the square you want to change.
+1 1
+What is the new value?
+18
+  17  19  18
+  19  18  17
+  14   7   8
+Enter the row(0-2) and column(0-2) of the square you want to change.
+3 3
+Sorry, those values aren't in between 0 and 2.
+Enter the row(0-2) and column(0-2) of the square you want to change.
+2 0
+What is the new value?
+18
+  17  19  18
+  19  18  17
+  18   7   8
+Enter the row(0-2) and column(0-2) of the square you want to change.
+2 1
+What is the new value?
+17
+  17  19  18
+  19  18  17
+  18  17   8
+Enter the row(0-2) and column(0-2) of the square you want to change.
+2 2
+What is the new value?
+19
+Great job, here is your final square:
+  17  19  18
+  19  18  17
+  18  17  19
+You scored 9 points for the Square Game this time!
+Please enter your choice from one of the following options.
+1. Play the guessing game.
+2. Play the square game.
+3. View your current score.
+4. Quit.
+4
+Your final score is 18.

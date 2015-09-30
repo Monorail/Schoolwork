@@ -1,0 +1,60 @@
+//Alex Berliner
+//a2737438
+public class RunLikeHell {
+
+	static int DParr[];
+	static int arr[];
+	public static void main(String[] args){
+		arr = {1,2,3,4,5,6,7,8,9,0};
+		
+	}
+	// for any index i, this function will take the greater of the indexes i-2
+	// and i-3 from the dynamically constructed array and deposit the greater of
+	// the two plus the value of the knowledge block at i and deposit it in the
+	// dynamic array. This will build up a DP solution for
+	// determining the max knowledge gained and requires that the dynamic array
+	// have the base cases of [0], [1], and [2] and that we start building at 3.
+	public static int maxGain(int[] blocks) {
+		// checks for arrays that aren't large enough to perform the function on
+		if (blocks == null || blocks.length == 0) {
+			return 0;
+		} else if (blocks.length == 1) {
+			return blocks[0];
+		} else if (blocks.length == 2) {
+			return Math.max(blocks[0], blocks[1]);
+		}
+
+		DParr = new int[blocks.length];
+		// set up base cases
+		DParr[0] = blocks[0];
+		DParr[1] = blocks[1];
+		DParr[2] = blocks[2] + blocks[0];
+		// for every array element starting with the third, add the array's
+		// value to the previous two numbers of the DP array, which is the
+		// memoization of the last two DP answers
+		for (int i = 3; i < blocks.length; i++) {
+			DParr[i] = blocks[i] + Math.max(DParr[i - 2], DParr[i - 3]);
+		}
+		return Math.max(DParr[DParr.length - 1], DParr[DParr.length - 2]);
+	}
+
+	public static int maxRec(int pos){
+		if(pos >= arr.length)
+			return 0;
+		return Math.max(
+					arr[pos+1],
+					Math.max(
+					arr[pos] + maxRec(pos+2),
+					arr[pos] + maxRec(pos+3)
+					)
+				);
+	}
+	
+	public static double difficultyRating() {
+		return 3.3;
+	}
+
+	public static double hoursSpent() {
+		return 4;
+	}
+}

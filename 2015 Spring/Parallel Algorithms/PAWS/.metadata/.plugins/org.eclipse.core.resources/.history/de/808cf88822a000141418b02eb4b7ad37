@@ -1,0 +1,11 @@
+
+public class PrimeTester implements Runnable {
+	
+	public PrimeTester(int ID){
+		
+	}
+	
+	public void run() {
+		
+	}
+}

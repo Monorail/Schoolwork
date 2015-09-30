@@ -1,0 +1,2 @@
+INDEX VERSION 1.126+D:\Dropbox\School\2014 Fall\Operating Systems\ANGRYABOUTELVES\workspace\.metadata\.plugins\org.eclipse.jdt.core
+2987860418.index

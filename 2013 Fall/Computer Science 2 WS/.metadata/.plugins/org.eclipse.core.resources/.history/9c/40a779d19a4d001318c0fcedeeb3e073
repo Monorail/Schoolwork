@@ -1,0 +1,181 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
+
+class wall {
+	static int wallNumber = 0;
+	int width, height;
+
+	public wall(int width, int height) {
+		this.width = width;
+		this.height = height;
+		wallNumber++;
+	}
+
+	public String toString() {
+		return "(" + width + "," + height + ")";
+	}
+}
+
+public class Maze {
+	public static void main(String[] args) {
+		char[][] maze = create(3,3);
+		// printMaze(maze);
+	}
+
+	public static void printMaze(char[][] maze) {
+		int absWidth = maze.length;
+		int absHeight = maze[0].length;
+		System.out.printf("Printing %d x %d maze\n", absWidth, absHeight);
+		for (int i = 0; i < absHeight; i++) {
+			for (int j = 0; j < absWidth; j++) {
+				System.out.print(maze[j][i]);
+			}
+			System.out.println();
+		}
+	}
+
+	public static char[][] create(int width, int height) {
+		int[] disjointSet = new int[width * height];
+		int[] setRank = new int[width * height];
+
+		// initialize set
+		for (int i = 0; i < disjointSet.length; i++)
+			disjointSet[i] = i;
+		for (int i = 0; i < setRank.length; i++)
+			setRank[i] = 0;
+
+		int absWidth = width * 2 + 1;
+		int absHeight = height * 2 + 1;
+		// generate stock maze
+		char[][] maze = new char[absWidth][absHeight];
+		for (int i = 0; i < absWidth; i++) {
+			for (int j = 0; j < absHeight; j++) {
+				maze[i][j] = 'x';
+			}
+		}
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				maze[i * 2 + 1][j * 2 + 1] = '@';
+			}
+		}
+		// generate random order to remove walls
+		ArrayList<wall> wallList = new ArrayList<wall>();
+		for (int i = 1; i < absWidth - 1; i++) 
+			for (int j = 1; j < absHeight - 1; j++) 
+				if ((maze[i - 1][j] == '@' && maze[i + 1][j] == '@')
+						|| (maze[i][j - 1] == '@' && maze[i][j + 1] == '@')) 
+					wallList.add(new wall(i, j));
+		
+		Collections.shuffle(wallList);
+
+		// add wallList elements to a queue
+		Queue<wall> wallQ = new LinkedList<wall>();
+		for (int i = 0; i < wallList.size(); i++) {
+			wallQ.add(wallList.get(i));
+		}
+
+		while (!wallQ.isEmpty()) {
+			removeWall(wallQ.remove(), maze, disjointSet, setRank);
+			printMaze(maze);
+		}
+//		printMaze(maze);
+		return maze;
+	}
+
+	public static void printSetAndRank(int[] set, int[] rank) {
+		for (int i = 0; i < set.length; i++)
+			System.out.print(set[i] + " ");
+		System.out.println();
+		for (int i = 0; i < set.length; i++)
+			System.out.print(i + " ");
+		System.out.println();
+		for (int i = 0; i < set.length; i++)
+			System.out.print("--");
+		System.out.println();
+		for (int i = 0; i < rank.length; i++)
+			System.out.print(rank[i] + " ");
+		System.out.println();
+		System.out.println();
+	}
+
+	static void removeWall(wall delWall, char[][] maze, int[] disjointSet,
+			int[] setRank) {
+		int wallX_a = delWall.width;
+		int wallY_a = delWall.height;
+		int mazeWidth_r = (maze.length - 1) / 2;
+		// first assuming it's vertical:
+		int a = getSetNum(wallX_a, wallY_a - 1, mazeWidth_r);
+		int b = getSetNum(wallX_a, wallY_a + 1, mazeWidth_r);
+		
+		// change values if horizontal
+		if (maze[wallX_a - 1][wallY_a] == '@' && maze[wallX_a + 1][wallY_a] == '@') {
+			System.out.println("Horiztonal");
+			System.out.printf("a: (%d,%d)",wallX_a - 1,wallY_a);
+			System.out.printf("b: (%d,%d)",wallX_a + 1,wallY_a);
+			a = getSetNum(wallX_a - 1, wallY_a, mazeWidth_r);
+			b = getSetNum(wallX_a + 1, wallY_a, mazeWidth_r);
+		}
+		else 
+			System.out.println("Vertical");
+		System.out.printf("%d %d\n", a,b);
+		
+		if (findset(a, disjointSet) == findset(b, disjointSet)){
+			System.out.printf("Skipping union: %d and %d\n",a,b);
+			return;
+		}
+		
+		System.out.printf("Joining elements %d and %d\n", a, b);
+		union(a, b, disjointSet, setRank);
+		maze[wallX_a][wallY_a] = '@';
+	}
+
+	public static int getSetNum(int width, int height, int mazeWidth_r) {
+		int Ax_a = width - 1;
+		int Ax_r = (Ax_a - 1) / 2;
+		int Ay_a = height;
+		int Ay_r = (Ay_a - 1) / 2;
+		return Ay_r * mazeWidth_r + Ax_r;
+
+	}
+
+	public static boolean isCompleteMaze(int[] disjointSet) {
+		for (int i = 0; i < disjointSet.length - 1; i++)
+			if (findset(i, disjointSet) != findset(i + 1, disjointSet))
+				return false;
+		return true;
+	}
+
+	public static int findset(int index, int[] disjointSet) {
+		if (disjointSet[index] == index)
+			return index;
+
+		disjointSet[index] = findset(disjointSet[index], disjointSet);
+		return disjointSet[index];
+	}
+
+	public static void union(int a, int b, int[] disjointSet, int[] setRank) {
+		int seta = findset(a, disjointSet);
+		int setb = findset(b, disjointSet);
+		
+		if (findset(a, disjointSet) != findset(b, disjointSet))
+			disjointSet[findset(b, disjointSet)] = findset(a, disjointSet);
+		if (setRank[seta] < setRank[setb])
+			disjointSet[seta] = setb;
+		else if (setRank[setb] < setRank[seta])
+			disjointSet[setb] = seta;
+		else {
+			disjointSet[setb] = seta;
+			setRank[seta]++;
+		}
+	}
+
+	public static double hoursSpent() {
+		return 3;
+	}
+
+	public static double difficultyRating() {
+		return 3;
+	}
+}

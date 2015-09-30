@@ -1,0 +1,4 @@
+gcc ListString.c && ./a.out input01.txt > test.txt && diff output01.txt test.txt
+gcc ListString.c && ./a.out input02.txt > test.txt && diff output02.txt test.txt
+gcc ListString.c && ./a.out input03.txt > test.txt && diff output03.txt test.txt
+

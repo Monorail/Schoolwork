@@ -1,0 +1,74 @@
+import java.util.ArrayList;
+import java.util.Random;
+
+
+public class Philosoraptor implements Runnable {
+	ArrayList<Philosoraptor> rapArr;
+	boolean usingLeftStick, usingRightStick;
+	int ID;
+	long lastEaten;
+	public enum philState {
+	    THINKING, HUNGRY, EATING, WAITING
+	}
+	public Philosoraptor(ArrayList<Philosoraptor> rapArr, int ID){
+		this.rapArr = rapArr;
+		this.ID=ID;
+		usingLeftStick = usingRightStick = false;
+//		System.out.println(ID);
+	}
+	
+	public void run() {
+		System.out.println(ID);
+		Random R = new Random();
+		long lastTick = System.currentTimeMillis();
+		philState state = philState.THINKING;
+		while(true){
+			if(System.currentTimeMillis() - lastTick > 1000){
+				switch(state){
+				case THINKING:
+					System.out.println(ID + ": Thinking");
+					if(R.nextInt()%100 < 30){
+						state = philState.HUNGRY;
+					}
+					break;
+				case HUNGRY:
+					System.out.println(ID + ": Hungry");
+					if(leftStickDown() && rightStickDown()){
+						usingLeftStick = usingRightStick = true;
+						state = philState.EATING;
+					}else{
+						state = philState.WAITING;
+					}
+					break;
+				case WAITING:
+					System.out.println(ID + ": Waiting");	
+					if(leftStickDown() && rightStickDown()){
+						usingLeftStick = usingRightStick = true;
+						state = philState.EATING;
+					}				
+					break;
+				case EATING:
+					System.out.println(ID + ": Eating");
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					usingLeftStick = usingRightStick = false;
+					state = philState.THINKING;
+					break;
+				default: 
+					break;
+				}
+				
+				lastTick = System.currentTimeMillis();
+			}
+		}
+	}
+	public boolean leftStickDown(){
+		return rapArr.size() < 2 || !rapArr.get((ID-1 < 0)?rapArr.size()-1:ID-1).usingRightStick;
+	}
+	public boolean rightStickDown(){
+		return rapArr.size() < 2 || !rapArr.get((ID+1)%rapArr.size()).usingLeftStick;
+	}
+}

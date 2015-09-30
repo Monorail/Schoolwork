@@ -1,0 +1,332 @@
+//Alex Berliner
+//a2737438
+//gcc Trie.c && ./a.out corpus01.txt input01.txt
+#include "Trie.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define NCHILD 26
+#define NUMWORDS 20
+#define NUMCHARS 1023
+#define debug 0
+#define SENTENCEDBG 0
+#define MAINDEBUG 0
+#define debug4 0
+TrieNode *createTrieNode(void);
+TrieNode *getNode(TrieNode *root, char *str);
+int NChecker(TrieNode *root);
+void insertString(TrieNode *root, char *str);
+void lowerString(char *str);
+void insertChar(TrieNode *root,char ch, int last);
+void printTrie(TrieNode *root, int useSubtrieFormatting);
+void printTrieHelper(TrieNode *root, char *buffer, int k);
+TrieNode *createSentence(TrieNode *root,char **sentence);
+TrieNode *createSubtrie(char *key,char **sentence, int numWords);
+void panic(char *s)
+{
+	fprintf(stdout, "%s", s);
+	exit(1);
+}
+int main(int argc, char **argv){
+	FILE* ifp;
+	char *str = malloc(sizeof(char)*1023);
+	if(argc<2){
+		printf("Not enough args!\n");
+		if (debug != 1 ) return 0;
+	}
+		
+	ifp = fopen(argv[1], "r");
+	if (ifp == NULL) {
+		fprintf(stderr, "Can't open str file in.list!\n");
+	}
+	TrieNode *root  = createTrieNode();
+	TrieNode *temp;
+	int numWords=0;
+	int i = 0,j=0;
+	char **sentence=malloc(sizeof(char *)*(NUMWORDS+1));
+	for(i =0;i<NUMWORDS;i++){
+		sentence[i] = malloc(sizeof(char) * (NUMCHARS+1));
+	}
+	
+	
+	//this should read until the end of a line and create the root and subtries
+	while(fscanf(ifp, "%s", str)!=EOF){
+		for(i = 0;i<NUMWORDS;i++)
+			for(j=0;j<NUMCHARS;j++)
+				sentence[i][j]='\0';
+		i=0;
+		do{
+			strcpy(sentence[i],str);
+			i++;
+			fscanf(ifp,"%s",str);
+		}while(strcmp(str,".")!=0);
+		root=createSubtrie("pie",sentence,i);
+		//printTrie(root,0);
+	}
+	
+	//return 0;
+	if(MAINDEBUG)printf("Main(): Herp\n");
+	ifp = fopen(argv[2], "r");
+	if(MAINDEBUG)printf("Main(): %s opened\n",argv[2]);
+	while(fscanf(ifp, "%s", str)!=EOF){
+		if(MAINDEBUG)printf("Main(): Parsing cmd %s\n",str);
+		if(strcmp(str,"!") == 0){
+			if(MAINDEBUG)printf("main(): Printing trie\n");
+			printTrie(root,0);	
+		}else{
+			printf("%s\n",str);
+			lowerString(str);
+			if(MAINDEBUG)printf("\nLooking for %s inside of \n",str);
+			printTrie(getNode(root,str),1);
+			if(getNode(root,str)==NULL){
+				printf("(INVALID STRING)\n");
+				continue;
+			}
+			if(MAINDEBUG)printf("Main(): Getting subtrie\n");
+			TrieNode *tempNode = getNode(root,str)->subtrie;
+			if(MAINDEBUG)printf("Main(): Got subtrie\n");
+			printTrie(tempNode,1);
+		}
+	}
+	
+	return 0;
+}
+TrieNode *createSubtrie(char *key,char **sentence,int numWords){
+	TrieNode *root = createTrieNode();
+	int i,j,skipped = 0;
+	for(i=0;i<numWords;i++){
+		if(skipped==0 && strcmp(sentence[i],key)==0){
+			skipped = 1;
+			continue;
+		}
+		insertString(root, sentence[i]);
+	}
+	
+	return root;
+}
+TrieNode *createSentence(TrieNode *root,char **sentence){
+	int ctr = 0,i=0;
+	if(SENTENCEDBG)printf("createSentence(): Creating main tree\n");
+	while(strcmp(sentence[ctr],".") !=0){
+		if(SENTENCEDBG)printf("createSentence(): Inserting %s\n",sentence[ctr]);
+		insertString(root, sentence[ctr]);
+		if(SENTENCEDBG)printTrie(root,0);
+		ctr++;
+	}
+	//gets past here ok
+	int totWords = ctr;
+	//check to see if subtrie exists. if so, use that instead of creating one.
+	if(SENTENCEDBG)printf("createSentence(): Creating subTrieHolder\n");
+	TrieNode **subTrieHolder = malloc(sizeof(TrieNode *) *totWords);
+	
+	for(i=0;i<totWords;i++){
+		subTrieHolder[i]=createSubtrie(sentence[i],sentence,ctr);	
+		getNode(root,sentence[i])->subtrie = subTrieHolder[i];
+		printTrie(getNode(root,sentence[i])->subtrie,1);
+	}
+	
+	
+	
+	
+	
+	return root;
+	/*
+	for(i=0;i<totWords;i++){
+		subTrieHolder[i] = getNode(root, createTrieNode();//<--------- blegh
+	}
+	*/
+	int j=0;
+	for(i=0;i<totWords;i++){
+		if(SENTENCEDBG)printf("createSentence(): Creating subtrie for %s\n",sentence[i]);
+		for(j=0;j<totWords;j++){
+			if(i==j)
+				continue;
+			TrieNode *h=getNode(root,sentence[j]);
+			if(h!=NULL){
+				if(SENTENCEDBG)printf("createSentence(): Reusing %s\n",sentence[j]);
+				subTrieHolder[i] = h;
+			}
+			else subTrieHolder[i] = createTrieNode();
+			subTrieHolder[i] = createTrieNode();
+			if(SENTENCEDBG)printf("createSentence(): Inserting %s into subtrie %s\n",sentence[j],sentence[i]);
+			insertString(subTrieHolder[i],sentence[j]);//0->i i -> j
+			
+		}
+		if(SENTENCEDBG)printf("createSentence(): Printing subtrie\n");
+		printTrie(subTrieHolder[i],1);
+		TrieNode *tempNode = getNode(root,sentence[i])->subtrie=subTrieHolder[i];
+		if(SENTENCEDBG)printf("\nSubtrie for \"%s\":\n",sentence[i]);
+		if(SENTENCEDBG)printTrie(tempNode,i);
+		if(SENTENCEDBG)printf("\n");
+	}
+	if(SENTENCEDBG)printf("Returning with root\n");
+	return root;
+}
+TrieNode *getNode(TrieNode *root, char *str){
+	int strLen = strlen(str),i;
+	TrieNode *temp = root;
+	for(i=0;i<strLen;i++){
+		if(temp->children[(int)str[i]-97]!=NULL){
+			if(debug)printf("getNode(): Moving to %c\n",str[i]);
+			temp=temp->children[(int)str[i]-97];
+			if(debug)printf("getNode(): Moved\n");
+		}
+		else{
+			if(debug)printf("getNode(): NULL child!\n");
+			return NULL;
+			}
+	}
+	return temp;
+}
+void lowerString(char *str){
+	//converts a string to lowercase
+	//get the length of the string
+	if(debug)printf("lowerString(): Lowering %s\n",str);
+	int i = 0,end = strlen(str);
+	if(debug)printf("lowerString(): String is %d long\n",end);
+	//iterates backwards and sets each character to its lower equivalent
+	for(i=0;i<end;i++){
+		if(debug)printf("lowerString(): Loop iteration %d lowering %c\n",i,str[i]);
+		str[i]=tolower(str[i]);
+		if(debug)printf("lowerString(): Past Lowering of %c\n",str[i]);
+	}
+	if(debug)printf("lowerString(): String lowered to %s\n",str);
+}
+int NCheck(TrieNode *root){
+	if(root==NULL){
+		if(debug)printf("NChecker(): Passed root is NULL\n");
+	}
+	if(debug)printf("NChecker(): Passed root is *NOT* NULL\n");
+	if(root->children==NULL){
+		if(debug)printf("NChecker(): Passed root->children is NULL\n");
+	}
+	if(debug)printf("NChecker(): Passed root->children is *NOT* NULL\n");
+	int i;
+	char *activeChildren=malloc(sizeof(char)*NCHILD*2);
+	for(i = 0;i<NCHILD;i++){
+		if(root->children[i]!=NULL){
+			if(debug)printf("NChecker(): Adding %c\n",(char)(i+97));
+			activeChildren[strlen(activeChildren)]=(char)(i+97);
+			strcat(activeChildren,",");
+		}
+	}
+	printf("NChecker(): Active children: %s\n", activeChildren);
+	free(activeChildren);
+	return 0;
+}
+void insertChar(TrieNode *root,char ch, int last){
+	if(root==NULL){
+		if(debug)printf("insertChar(): Node is NULL, creating\n");
+		root = createTrieNode();
+	}
+	if(debug)printf("insertChar(): Inserting node %c\n",ch);
+	if(root->children[(int)ch-97]==NULL){
+		if(debug)printf("insertChar(): Creating new node %c\n",ch);
+		root->children[(int)ch-97] = createTrieNode();
+	}
+	if(last){
+		if(debug)printf("insertChar(): inserting last char %c,count is %d\n",ch,root->children[(int)ch-97]->count+1);
+		root->children[(int)ch-97]->count++;
+	}
+}
+void insertString(TrieNode *root, char *str){
+	/*
+	what this does:
+	takes a single word and inserts it into a trie
+	
+	what this should do:
+	take a sentence in the form of a string array
+	create a main trie
+	make a corresponding subtrie array for each word
+	construct and insert a subtrie into the new array for each word
+	link every subtrie to their corresponding words in the main trie
+	*/
+	if(str==NULL)
+		panic("insertString(): Null string entered\n");
+	if(root==NULL){
+		if(debug)printf("insertString(): root node is NULL!\n");
+	}else if(debug)printf("insertString(): root node is not NULL!\n");
+	lowerString(str);
+	TrieNode *tempPtr = root;
+	if(tempPtr == NULL && debug)printf("insertString(): tempPtr is NULL\n");	
+	int runNum = strlen(str),i;
+	for(i=0;i<runNum-1;i++){
+		insertChar(tempPtr, str[i],0);
+		tempPtr = tempPtr->children[(int)str[i]-97];
+	}
+	insertChar(tempPtr, str[i],1);
+}
+TrieNode *buildTrie(char *filename){
+	
+}
+TrieNode *createTrieNode(void){//initializes data for a new trie node
+	//create the root
+	TrieNode *temp = malloc(sizeof(TrieNode));
+	//create the children
+	//temp->children[0] = malloc(sizeof(TrieNode)*NCHILD);
+	temp->children[0] = (TrieNode *)malloc(sizeof(TrieNode *)*NCHILD);
+	//create the subtrie
+	temp->subtrie = NULL;
+	//set the count to 0
+	temp->count = 0;
+	int i;
+	for(i=0;i<NCHILD;i++){
+		temp->children[i]=NULL;
+	}
+	return temp;
+}
+
+
+void printTrieHelper(TrieNode *root, char *buffer, int k)
+{
+	int i;
+
+	if (root == NULL)
+		return;
+
+	if (root->count > 0)
+		printf("%s (%d)\n", buffer, root->count);
+
+	buffer[k + 1] = '\0';
+
+	for (i = 0; i < 26; i++)
+	{
+		buffer[k] = 'a' + i;
+
+		printTrieHelper(root->children[i], buffer, k + 1);
+	}
+
+	buffer[k] = '\0';
+}
+
+// If printing a subtrie, the second parameter should be 1; otherwise, 0.
+void printTrie(TrieNode *root, int useSubtrieFormatting)
+{
+	char buffer[1026];
+
+	if (useSubtrieFormatting)
+	{
+		strcpy(buffer, "- ");
+		printTrieHelper(root, buffer, 2);
+	}
+	else
+	{
+		strcpy(buffer, "");
+		printTrieHelper(root, buffer, 0);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

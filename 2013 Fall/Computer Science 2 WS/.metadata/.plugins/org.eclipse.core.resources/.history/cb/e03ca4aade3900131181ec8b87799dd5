@@ -1,0 +1,107 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class TopoPath {
+	int numNodes = 10;
+	static int numElems=10;
+	ArrayList<Node> topArray = new ArrayList<Node>();
+	static int numChildren[];
+	public static boolean hasTopoPath(String filename) throws FileNotFoundException{
+
+		Scanner sc = new Scanner(new File(filename));
+		numElems = sc.nextInt();
+		numChildren = new int[numElems];
+		for(int i = 0;i<numElems;i++){
+			numChildren[i] = 0;
+		}
+		TopoPath path = new TopoPath(numElems);
+		
+		for(int i = 0;i<numElems;i++){
+			int numChildren = sc.nextInt();
+			for(int j = 0; j < numChildren;j++){
+				int temp = sc.nextInt();
+				path.insert(i, temp);
+			}
+		}
+		
+		
+		
+		int numZs = 0;
+		int entryPt;
+		for(int i = 0;i<numElems;i++){
+			if(numChildren[i]==0){
+				numZs++;
+				entryPt = i;
+			}
+			if(numZs>1){
+				return false;
+			}
+		}
+		Node entry = path.topArray.get(entryPt);
+		while(entry!=null){
+			
+		}
+		System.out.println(path);
+		System.out.println("hi");
+		return false;
+	}
+	
+	
+	
+	public void insert(int pos, int data){
+		if(pos>numElems){
+			System.err.println("Index element " + pos + " out of bound " + numElems + "!");
+			System.exit(0);
+		}
+		numChildren[data-1]++;
+		Node temp = new Node(data);
+		if(topArray.get(pos) == null){
+			 topArray.set(pos,temp);
+		}else{
+			temp.next = topArray.get(pos);
+			topArray.set(pos, temp);
+		}
+		
+	}
+	
+	public String toString(){
+		String out = "";
+		for(int i = 0;i<numElems-1;i++){
+			out+=i+1 + ": " + topArray.get(i) +"(" + numChildren[i] + ")" +"\n";
+		}
+		out+=numElems + ": " + topArray.get(numElems-1) + " (" + numChildren[numElems-1] + ")" +"\n";
+		return out;
+	}
+	public TopoPath(int numNodes){
+		this.numNodes = numNodes;
+		for(int i = 0;i < numNodes;i++){
+			topArray.add(null);
+		}
+	}
+	
+	public static void main(String[] args) throws FileNotFoundException {
+		hasTopoPath("g3.txt");
+	}
+}
+
+class Node{
+	Node next;
+	public int pos;
+	public int numParents;
+	public Node(int pos){
+		this.pos = pos;
+		this.next = null;
+	}
+	
+	public String toString(){
+		String out="";
+		Node temp = this;
+		while(temp!= null){
+			out+=temp.pos + ", ";
+			temp = temp.next;
+		}
+		return out;
+	}
+}

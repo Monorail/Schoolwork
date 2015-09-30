@@ -1,0 +1,14 @@
+import java.util.ArrayList;
+
+
+public class Main {
+	public static void main(String[] args) {
+		ArrayList<Integer> al = new ArrayList<Integer>();
+		int ctr = 3;
+		while(ctr<1000000)
+			al.add(ctr++);
+		System.out.println("at last my chocolate chip cookies are done!");
+		
+	}
+
+}

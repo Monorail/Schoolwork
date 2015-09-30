@@ -1,0 +1,25 @@
+1384285842457	Rename local variable 'wallQ'
+1384285845209	Rename local variable 'wallLit'
+1384298002044	Rename local variable 'wall'
+1384299355585	Rename local variable 'relMazeWidth'
+1384299360294	Rename local variable 'MazeWidth_r'
+1384299370851	Rename local variable 'relMazeHeight'
+1384299465955	Rename local variable 'wallX'
+1384299470482	Rename local variable 'wallY'
+1384476555486	Rename method 'printSAR'
+1384480156867	Rename local variable 'a'
+1384480167451	Rename local variable 'pt1'
+1384480173003	Rename local variable 'b'
+1384480269703	Copy compilation unit
+1384480277317	Move compilation unit
+1384480322111	Move file
+1384480326661	Move compilation unit
+1384480411717	Rename local variable 'unionPt1'
+1384480415778	Rename local variable 'unionPt2'
+1384480925323	Rename type 'CopyOfMaze'
+1384622977486	Rename local variable 'wallX_a'
+1384622991430	Rename local variable 'wallY_a'
+1384622996484	Rename local variable 'absoluteWallHeight'
+1384622999012	Rename local variable 'absoWallHeight'
+1384623004546	Rename local variable 'absoluteWallWidth'
+1384623177897	Rename local variable 'mazeWidth_r'

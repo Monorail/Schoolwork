@@ -1,0 +1,51 @@
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+
+public class theserver {
+	public static void main(String[] args) {
+	    ServerSocket MyService = null;
+	    try {
+	       MyService = new ServerSocket(2000);
+	        }
+	        catch (IOException e) {
+	           System.out.println(e);
+	        }
+	    Socket serviceSocket = null;
+	    try {
+	       serviceSocket = MyService.accept();
+	        }
+	    catch (IOException e) {
+	       System.out.println(e);
+	    }
+	    DataInputStream input;
+	    try {
+	       input = new DataInputStream(serviceSocket.getInputStream());
+	    }
+	    catch (IOException e) {
+	       System.out.println(e);
+	    }
+	    
+	    DataOutputStream output;
+	    try {
+	       output = new DataOutputStream(MyService.getOutputStream());
+	    }
+	    catch (IOException e) {
+	       System.out.println(e);
+	    }
+	    
+	    try {
+	        output.close();
+	        input.close();
+	        serviceSocket.close();
+	        MyService.close();
+	     } 
+	     catch (IOException e) {
+	        System.out.println(e);
+	     }
+	}
+
+}

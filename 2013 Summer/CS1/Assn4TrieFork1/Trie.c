@@ -1,0 +1,208 @@
+//Alex Berliner
+//a2737438
+//gcc Trie.c && ./a.out corpus01.txt input01.txt
+#include "Trie.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#define NCHILD 26
+#define debug 1
+TrieNode *createTrieNode(void);
+TrieNode *getNode(TrieNode *root, char *str);
+int NChecker(TrieNode *root);
+void insertString(TrieNode *root, char *str);
+void lowerString(char *str);
+void insertChar(TrieNode *root,char ch, int last);
+void printTrie(TrieNode *root, int useSubtrieFormatting);
+void printTrieHelper(TrieNode *root, char *buffer, int k);
+void panic(char *s)
+{
+	fprintf(stdout, "%s", s);
+	exit(1);
+}
+int main(int argc, char **argv){
+	FILE* ifp;
+	char *str = malloc(sizeof(char)*1023);
+	if(argc<2){
+		printf("Not enough args!\n");
+		if (debug != 1 ) return 0;
+	}
+		
+	ifp = fopen(argv[1], "r");
+	if (ifp == NULL) {
+		fprintf(stderr, "Can't open str file in.list!\n");
+	}
+	TrieNode *root  = createTrieNode();
+	TrieNode *temp;
+	fscanf(ifp,"%s",str);
+	while(strcmp(str,".") !=0){
+		insertString(root, str);
+		fscanf(ifp,"%s",str);
+	}
+	ifp = fopen(argv[2], "r");
+	while(fscanf(ifp, "%s", str)!=EOF){
+		if(strcmp(str,"!") == 0){
+			if(debug)printf("main(): Printing trie\n");
+			printTrie(root,1);	
+		}
+	}
+	return 0;
+}
+TrieNode *getNode(TrieNode *root, char *str){
+	printf("%s\n",str);
+	lowerString(str);
+	printf("%s\n",str);
+	int strLen = strlen(str),i;
+	TrieNode *temp = root;
+	for(i=0;i<strLen;i++){
+		if(temp->children[(int)str[i]-97]!=NULL){
+			if(debug)printf("getNode(): Moving to %c\n",str[i]);
+			temp=temp->children[(int)str[i]-97];
+			if(debug)printf("getNode(): Moved\n");
+		}
+		else{
+			if(debug)printf("getNode(): NULL child!\n");
+			return NULL;
+			}
+	}
+	return temp;
+}
+void lowerString(char *str){
+	//converts a string to lowercase
+	//get the length of the string
+	if(debug)printf("lowerString(): Lowering %s\n",str);
+	int i = 0,end = strlen(str);
+	if(debug)printf("lowerString(): String is %d long\n",end);
+	//iterates backwards and sets each character to its lower equivalent
+	for(i=0;i<end;i++){
+		if(debug)printf("lowerString(): Loop iteration %d lowering %c\n",i,str[i]);
+		str[i]=tolower(str[i]);
+		if(debug)printf("lowerString(): Past Lowering of %c\n",str[i]);
+	}
+	if(debug)printf("lowerString(): String lowered to %s\n",str);
+}
+int NCheck(TrieNode *root){
+	if(root==NULL){
+		if(debug)printf("NChecker(): Passed root is NULL\n");
+	}if(debug)printf("NChecker(): Passed root is *NOT* NULL\n");
+	if(root->children==NULL){
+		if(debug)printf("NChecker(): Passed root->children is NULL\n");
+	}if(debug)printf("NChecker(): Passed root->children is *NOT* NULL\n");
+	int i;
+	char *activeChildren=malloc(sizeof(char)*NCHILD*2);
+	for(i = 0;i<NCHILD;i++){
+		if(root->children[i]!=NULL){
+			if(debug)printf("NChecker(): Adding %c\n",(char)(i+97));
+			activeChildren[strlen(activeChildren)]=(char)(i+97);
+			strcat(activeChildren,",");
+		}
+	}
+	printf("NChecker(): Active children: %s\n", activeChildren);
+	free(activeChildren);
+	return 0;
+}
+void insertChar(TrieNode *root,char ch, int last){
+	if(root==NULL){
+		if(debug)printf("insertChar(): Node is NULL, creating\n");
+		root = createTrieNode();
+	}
+	if(debug)printf("insertChar(): Inserting node %c\n",ch);
+	if(root->children[(int)ch-97]==NULL){
+		if(debug)printf("insertChar(): Creating new node %c\n",ch);
+		root->children[(int)ch-97] = createTrieNode();
+	}
+	if(last){
+		if(debug)printf("insertChar(): inserting last char %c,count is %d\n",ch,root->children[(int)ch-97]->count+1);
+		root->children[(int)ch-97]->count++;
+	}
+}
+void insertString(TrieNode *root, char *str){
+	if(str==NULL)
+		panic("insertString(): Null string entered\n");
+	if(root==NULL){
+		if(debug)printf("insertString(): root node is NULL!\n");
+	}else if(debug)printf("insertString(): root node is not NULL!\n");
+	lowerString(str);
+	TrieNode *tempPtr = root;
+	if(tempPtr == NULL && debug)printf("insertString(): tempPtr is NULL\n");	
+	int runNum = strlen(str),i;
+	for(i=0;i<runNum-1;i++){
+		insertChar(tempPtr, str[i],0);
+		tempPtr = tempPtr->children[(int)str[i]-97];
+	}
+	insertChar(tempPtr, str[i],1);
+}
+TrieNode *buildTrie(char *filename){
+	
+}
+TrieNode *createTrieNode(void){//initializes data for a new trie node
+	//create the root
+	TrieNode *temp = malloc(sizeof(TrieNode));
+	//create the children
+	//temp->children[0] = malloc(sizeof(TrieNode)*NCHILD);
+	temp->children[0] = (TrieNode *)malloc(sizeof(TrieNode *)*NCHILD);
+	//create the subtrie
+	temp->subtrie = NULL;
+	//set the count to 0
+	temp->count = 0;
+	int i;
+	for(i=0;i<NCHILD;i++){
+		temp->children[i]=NULL;
+	}
+	return temp;
+}
+
+
+void printTrieHelper(TrieNode *root, char *buffer, int k)
+{
+	int i;
+
+	if (root == NULL)
+		return;
+
+	if (root->count > 0)
+		printf("%s (%d)\n", buffer, root->count);
+
+	buffer[k + 1] = '\0';
+
+	for (i = 0; i < 26; i++)
+	{
+		buffer[k] = 'a' + i;
+
+		printTrieHelper(root->children[i], buffer, k + 1);
+	}
+
+	buffer[k] = '\0';
+}
+
+// If printing a subtrie, the second parameter should be 1; otherwise, 0.
+void printTrie(TrieNode *root, int useSubtrieFormatting)
+{
+	char buffer[1026];
+
+	if (useSubtrieFormatting)
+	{
+		strcpy(buffer, "- ");
+		printTrieHelper(root, buffer, 2);
+	}
+	else
+	{
+		strcpy(buffer, "");
+		printTrieHelper(root, buffer, 0);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,4 @@
+int x;
+begin
+	pie := 100;
+end.

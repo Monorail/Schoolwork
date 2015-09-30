@@ -1,0 +1,341 @@
+import java.applet.Applet;
+import java.awt.*;
+import java.awt.event.*;
+
+public class EightQueens  extends Applet implements MouseListener, MouseMotionListener
+{
+
+	private static final long serialVersionUID = 1L;
+
+	static final int NUMROWS = 8;
+	static final int NUMCOLS = 8;
+	static final int SQUAREWIDTH = 50;
+	static final int SQUAREHEIGHT = 50;
+	static final int BOARDLEFT = 50;
+	static final int BOARDTOP = 50;
+	
+	int m_nBoard[][] = new int[8][8];
+	void ClearBoard()
+	{
+		for( int nRow=0; nRow<NUMROWS; nRow++ )
+		{
+			for( int nCol=0; nCol<NUMCOLS; nCol++ )
+			{
+				m_nBoard[nRow][nCol] = 0;
+			}
+		}
+	}
+
+	int m_nMoves[] = new int[8];
+	int m_nMoveIndex = 0;
+
+	boolean m_bClash = false;
+	
+	Image m_imgQueen;
+	MediaTracker tracker = new MediaTracker(this);
+	
+	
+	void solve(){
+		solve(0);
+		for(int i = 0; i < NUMROWS; i++){
+			m_nMoves[i] = -1'
+		}
+	}
+	
+	int solve(int row){
+		for(int i = 0; i < NUMROWS; i++){
+			m_nMoves[row] = i;
+			solve(row+1);
+			m_nMoves[row] = -1;
+		}
+		return 0;
+	}
+	void movesToBoard(){
+		for(int i = 0; i < NUMROWS; i++){
+			m_nBoard[i][m_nMoves[i]] = 1;
+		}
+	}
+	public void init() 
+	{
+        setSize(1020,700);  
+        addMouseListener( this );
+        addMouseMotionListener( this );        
+
+        try 
+        {
+        	m_imgQueen = getImage(getDocumentBase(),"queen.png");
+        	tracker.addImage(m_imgQueen, 1);
+        	tracker.waitForAll();        	
+        } 
+        catch (Exception e) 
+        {
+        }
+        
+	}
+	
+	void DrawSquares( Graphics canvas )
+	{
+		canvas.setColor(Color.BLACK);
+		for( int nRow=0; nRow<NUMROWS; nRow++ )
+		{
+			for( int nCol=0; nCol<NUMCOLS; nCol++ )
+			{
+				canvas.drawRect( BOARDLEFT + nCol * SQUAREWIDTH,
+					BOARDTOP + nRow * SQUAREHEIGHT, SQUAREWIDTH, SQUAREHEIGHT );
+				
+				if( m_nBoard[nRow][nCol] != 0 )
+				{
+					canvas.drawImage( m_imgQueen,
+						BOARDLEFT + nCol * SQUAREWIDTH + 8, BOARDTOP + nRow * SQUAREHEIGHT + 6, null );
+				}
+			}
+		}
+	}
+	
+	void CheckColumns( Graphics canvas )
+	{
+		// Check all columns
+		for(  int nCol=0; nCol<NUMCOLS; nCol++ )
+		{
+			int nColCount = 0;
+			for( int nRow=0; nRow<NUMROWS; nRow++ )
+			{
+				if( m_nBoard[nRow][nCol] != 0 )
+				{
+					nColCount++;
+				}
+			}
+			if( nColCount > 1 )
+			{
+				canvas.drawLine( BOARDLEFT + nCol * SQUAREWIDTH + ( SQUAREWIDTH / 2 ),
+					BOARDTOP + ( SQUAREHEIGHT / 2 ),	
+					BOARDLEFT + nCol * SQUAREWIDTH + ( SQUAREWIDTH / 2 ),
+					BOARDTOP + SQUAREHEIGHT * 7 + ( SQUAREHEIGHT / 2 ) );
+				
+				m_bClash = true;
+			}
+		}
+	}
+
+	void CheckRows( Graphics canvas )
+	{
+		for(  int nRow=0; nRow<NUMROWS; nRow++ )
+		{
+			int nRowCount = 0;
+			for( int nCol=0; nCol<NUMCOLS; nCol++ )
+			{
+				if( m_nBoard[nRow][nCol] != 0 )
+				{
+					nRowCount++;
+				}
+			}
+			if( nRowCount > 1 )
+			{
+				canvas.drawLine( BOARDLEFT + ( SQUAREWIDTH / 2 ),
+					BOARDTOP + nRow * SQUAREHEIGHT + ( SQUAREHEIGHT / 2 ),	
+					BOARDLEFT + 7 * SQUAREWIDTH + ( SQUAREWIDTH / 2 ),
+					BOARDTOP + nRow * SQUAREHEIGHT + ( SQUAREHEIGHT / 2 ) );
+				
+				m_bClash = true;
+			}
+		}
+	}
+	
+	void CheckDiagonal1( Graphics canvas )
+	{
+		// Check diagonal 1
+	
+		for( int nRow=NUMROWS-1; nRow>=0; nRow-- )
+		{
+			int nCol = 0;
+			
+			int nThisRow = nRow;
+			int nThisCol = nCol;
+
+			int nColCount = 0;
+			
+			while( nThisCol < NUMCOLS &&
+				nThisRow < NUMROWS )
+			{
+				if( m_nBoard[nThisRow][nThisCol] != 0 )
+				{
+					nColCount++;
+				}
+				nThisCol++;
+				nThisRow++;
+			}
+			
+			if( nColCount > 1 )
+			{
+				canvas.drawLine( BOARDLEFT + nCol * SQUAREWIDTH + ( SQUAREWIDTH / 2 ),
+						BOARDTOP + nRow * SQUAREHEIGHT + ( SQUAREHEIGHT / 2 ),	
+						BOARDLEFT + ( nThisCol - 1 ) * SQUAREWIDTH + ( SQUAREWIDTH / 2 ),
+						BOARDTOP + ( nThisRow - 1 ) * SQUAREHEIGHT + ( SQUAREHEIGHT / 2 ) );
+				
+				m_bClash = true;
+			}
+		}
+
+		for( int nCol=1; nCol<NUMCOLS; nCol++)
+		{
+			int nRow = 0;
+		
+			int nThisRow = nRow;
+			int nThisCol = nCol;
+
+			int nColCount = 0;
+			
+			while( nThisCol < NUMCOLS &&
+				nThisRow < NUMROWS )
+			{
+				if( m_nBoard[nThisRow][nThisCol] != 0 )
+				{
+					nColCount++;
+				}
+				nThisCol++;
+				nThisRow++;
+			}
+			
+			if( nColCount > 1 )
+			{
+				canvas.drawLine( BOARDLEFT + nCol * SQUAREWIDTH + ( SQUAREWIDTH / 2 ),
+						BOARDTOP + nRow * SQUAREHEIGHT + ( SQUAREHEIGHT / 2 ),	
+						BOARDLEFT + ( nThisCol - 1 ) * SQUAREWIDTH + ( SQUAREWIDTH / 2 ),
+						BOARDTOP + ( nThisRow - 1 ) * SQUAREHEIGHT + ( SQUAREHEIGHT / 2 ) );
+				
+				m_bClash = true;
+			}
+			
+		}
+		
+	}
+	
+	void CheckDiagonal2( Graphics canvas )
+	{
+		// Check diagonal 2
+		
+		for( int nRow=NUMROWS-1; nRow>=0; nRow-- )
+		{
+			int nCol = NUMCOLS - 1;
+			
+			int nThisRow = nRow;
+			int nThisCol = nCol;
+
+			int nColCount = 0;
+			
+			while( nThisCol >= 0 &&
+				nThisRow < NUMROWS )
+			{
+				if( m_nBoard[nThisRow][nThisCol] != 0 )
+				{
+					nColCount++;
+				}
+				nThisCol--;
+				nThisRow++;
+			}
+			
+			if( nColCount > 1 )
+			{
+				canvas.drawLine( BOARDLEFT + nCol * SQUAREWIDTH + ( SQUAREWIDTH / 2 ),
+						BOARDTOP + nRow * SQUAREHEIGHT + ( SQUAREHEIGHT / 2 ),	
+						BOARDLEFT + ( nThisCol + 1 ) * SQUAREWIDTH + ( SQUAREWIDTH / 2 ),
+						BOARDTOP + ( nThisRow - 1 ) * SQUAREHEIGHT + ( SQUAREHEIGHT / 2 ) );
+				
+				m_bClash = true;
+			}
+		}
+
+		for( int nCol=NUMCOLS-1; nCol>=0; nCol--)
+		{
+			int nRow = 0;
+		
+			int nThisRow = nRow;
+			int nThisCol = nCol;
+
+			int nColCount = 0;
+			
+			while( nThisCol >= 0 &&
+				nThisRow < NUMROWS )
+			{
+				if( m_nBoard[nThisRow][nThisCol] != 0 )
+				{
+					nColCount++;
+				}
+				nThisCol--;
+				nThisRow++;
+			}
+			
+			if( nColCount > 1 )
+			{
+				canvas.drawLine( BOARDLEFT + nCol * SQUAREWIDTH + ( SQUAREWIDTH / 2 ),
+						BOARDTOP + nRow * SQUAREHEIGHT + ( SQUAREHEIGHT / 2 ),	
+						BOARDLEFT + ( nThisCol + 1 ) * SQUAREWIDTH + ( SQUAREWIDTH / 2 ),
+						BOARDTOP + ( nThisRow - 1 ) * SQUAREHEIGHT + ( SQUAREHEIGHT / 2 ) );
+				
+				m_bClash = true;
+			}
+			
+		}
+	}
+	
+	public void paint (Graphics canvas)
+	{
+		
+		m_bClash = false;
+		
+		DrawSquares( canvas );
+		
+		canvas.setColor(Color.RED);
+		
+		CheckColumns( canvas );
+		CheckRows( canvas );
+		CheckDiagonal1( canvas );
+		CheckDiagonal2( canvas );
+	}
+	
+	@Override
+	public void mouseClicked(MouseEvent e) 
+	{
+	}
+	
+	@Override
+	public void mouseDragged(MouseEvent arg0) 
+	{
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent arg0) 
+	{
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent arg0) 
+	{
+	}
+
+	@Override
+	public void mouseExited(MouseEvent arg0) 
+	{
+	}
+
+	@Override
+	public void mousePressed(MouseEvent arg0) 
+	{
+		int nCol = ( arg0.getX() - BOARDLEFT ) / SQUAREWIDTH;
+		int nRow = ( arg0.getY() - BOARDTOP ) / SQUAREHEIGHT;
+		if( nCol >= 0 &&
+			nRow >= 0 &&
+			nCol < NUMCOLS &&
+			nRow < NUMROWS )
+		{
+			m_nBoard[nRow][nCol] ^= 1;
+			repaint();
+		}
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent arg0) 
+	{
+	}
+	
+}

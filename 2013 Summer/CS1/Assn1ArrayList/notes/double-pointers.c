@@ -1,0 +1,81 @@
+// double-pointers.c
+// Adapted from class on May 16, 2013.
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void panic(char *s)
+{
+	fprintf(stderr, "%s", s);
+	exit(1);
+}
+
+int main(void)
+{
+	int i, j, num_students, num_exams, **exam_scores = NULL, sum;
+
+	printf("How many students are in the class? ");
+	scanf("%d", &num_students);
+
+	printf("How many exams have they taken? ");
+	scanf("%d", &num_exams);
+
+	// Each student gets their own array. (Recall that (int *) can point to the
+	// begining of an array of integers. We'll want a bunch of those.)
+	exam_scores = malloc(sizeof(int *) * num_students);
+
+	if (exam_scores == NULL)
+		panic("ERROR: out of memory in main()\n");
+
+	// Each student gets an array.
+	for (i = 0; i < num_students; i++)
+	{
+		exam_scores[i] = malloc(sizeof(int) * num_exams);
+
+		if (exam_scores[i] == NULL)
+			panic("ERROR: out of memory in main()\n");
+	}
+
+	for (i = 0; i < num_students; i++)
+	{
+		// Re-initialize sum of exam scores for each student.
+		sum = 0;
+
+		printf("\n");
+
+		// Input exam scores
+		for (j = 0; j < num_exams; j++)
+		{
+			printf("What did Student #%d earn on Exam #%d: ", i + 1, j + 1);
+			scanf("%d", &exam_scores[i][j]);
+		}
+
+		// Let's make sure everything got in there.
+		for (j = 0; j < num_exams; j++)
+		{
+			printf("Student #%d earned %d on Exam #%d.\n", i + 1,
+			       exam_scores[i][j], j + 1);
+
+			sum += exam_scores[i][j];
+		}
+
+		if (num_exams != 0)
+			printf("Student #%d's exam average: %.2f\n", i + 1,
+			       (float)sum/(float)num_exams);
+	}
+
+	// Free this before you free(exam_scores), because once exam_scores is
+	// freed, you shouldn't be accessing exam_scores[i]!
+	for (i = 0; i < num_students; i++)
+		free(exam_scores[i]);
+
+	free(exam_scores);
+
+	// Notice that we had (1 + num_students) calls to malloc() above, as well
+	// as (1 + num_students) calls to free(). We cleaned everything up nicely.
+
+	// CHECK YOUR UNDERSTANDING:
+	// What happens if we free(exam_scores) twice in a row?
+
+	return 0;
+}

@@ -1,0 +1,13 @@
+-> Created new ArrayList of size 10.
+-> Trimmed ArrayList to size 0.
+(empty list)
+Size of list: 0
+(empty list)
+Size of list: -1
+Awesome!
+-> Created new ArrayList of size 10.
+Hello,
+world!
+Array list contents:
+Hello,
+world!

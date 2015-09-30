@@ -1,0 +1,20 @@
+import java.util.ArrayList;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+
+public class Main {
+	static AtomicBoolean b = new AtomicBoolean();
+	static int numThreads=8;
+	static Semaphore sem = new Semaphore(numThreads);
+	public static void main(String[] args) {
+		ArrayList<PrimeTester> primeList = new ArrayList<PrimeTester>();
+		for(int i = 0; i < numThreads; i++){
+			primeList.add(new PrimeTester(i,401,this);
+		}
+		Main main = new Main();
+		Thread th = new Thread();
+		b.set(true);
+	}
+
+}

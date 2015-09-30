@@ -1,0 +1,11 @@
+
+public class Deck {
+	final int numCards = 52;
+	Card[] deck = new Card[numCards];
+	public Deck(){
+		for(int i = 0; i< numCards;i++){
+			deck[i] = new Card(i%13,i/13);
+		}
+	}
+
+}

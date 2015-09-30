@@ -1,0 +1,193 @@
+// Sean Szumlanski
+// COP 3503, Fall 2013
+
+// TestCases.java
+// ==============
+// When you have your RunLikeHell class implemented properly, you should be able
+// to run this program and produce the following output:
+//
+//   Test Case #1: PASS
+//   Test Case #2: PASS
+//   Test Case #3: PASS
+//   Test Case #4: PASS
+//   Test Case #5: PASS
+//   Test Case #6: PASS
+//   Test Case #7: PASS
+//   Test Case #8: PASS
+//
+// Keep in mind that these test cases are by no means comprehensive! You need to
+// create some of your own.
+
+
+import java.io.*;
+
+public class TestCases
+{
+
+	static int [] blocks;
+	// Print whether the test case passes or fails, based on expected answer (ans)
+	public static void testCase(int [] blocks, int ans, int n)
+	{
+		System.out.print("Test Case #" + n + ": ");
+		int temp = RunLikeHell.maxGain(blocks);
+		System.out.println(( temp== ans) ? "PASS" : "FAIL");
+	}
+
+	public static void main(String [] args)
+	{
+		// This should help ensure everyone implements these methods correctly.
+		double dr = RunLikeHell.difficultyRating();
+		double hs = RunLikeHell.hoursSpent();
+
+		if (dr < 1.0 || dr > 5.0)
+		{
+			System.out.println("ERROR: difficultyRating() must return a double on the range [1.0, 5.0].");
+		}
+
+		if (hs <= 0.0)
+		{
+			System.out.println("ERROR: hoursSpent() must return a double that is greater than zero.");
+		}
+		int ans, i = 0;
+
+		// Test Case #1
+		blocks = new int[] {15, 3, 6, 17, 2, 1, 20};
+		ans = 52;
+		
+		testCase(blocks, ans, ++i);
+		
+		// Test Case #2
+		blocks = new int[] {9, 20, 13, 16, 9, 9, 6};
+		ans = 45;
+		
+		testCase(blocks, ans, ++i);
+
+		// Test Case #3
+		blocks = new int[] {9, 20, 13, 16, 9, 6, 9};
+		ans = 45;
+		
+		testCase(blocks, ans, ++i);
+
+		// Test Case #4
+		blocks = new int[] {15, 3, 6, 17, 2, 1, 20};
+		ans = 52;
+		
+		testCase(blocks, ans, ++i);
+
+		// Test Case #5
+		blocks = new int[] {16, 10, 15, 12, 2, 20, 2, 16};
+		ans = 67;
+		
+		testCase(blocks, ans, ++i);
+
+		// Test Case #6
+		blocks = new int[] {3, 5, 7, 3, 11, 5, 9, 8};
+		ans = 30;
+		
+		testCase(blocks, ans, ++i);
+
+		// Test Case #7
+		blocks = new int[] {7, 10, 18, 16, 17, 12, 14, 9};
+		ans = 56;
+		
+		testCase(blocks, ans, ++i);
+
+		// Test Case #8; this will be very slow with the recursive approach
+		blocks = new int[] {573, 216, 451, 236, 42, 243, 743, 162, 317, 323, 4,
+		                    407, 230, 380, 177, 89, 596, 421, 643, 655, 735, 441,
+		                    408, 716, 449, 781, 28, 346, 241, 229, 697, 354, 685,
+		                    628, 535, 463, 578, 275, 786, 362, 488, 372, 68, 434,
+		                    687};
+		ans = 11260;
+		
+		testCase(blocks, ans, ++i);
+		blocks = new int[] {10, 2, 3, 10, 9, 10, 3, 10, 5, 2};
+		ans = 42;
+		testCase(blocks, ans, ++i);
+		
+		blocks = new int[] {17, 20, 111, 142, 88, 199, 86, 90, 199, 51, 174, 
+							194, 3, 190, 138, 198, 104, 74, 195, 43};
+		ans = 1337;
+		testCase(blocks, ans, ++i);
+		
+		blocks = new int[] {251, 675, 579, 469, 388, 421, 51, 563, 680, 358, 778,
+							686, 590, 484, 180, 474, 460, 32, 896, 676, 867, 369,
+							510, 908, 709, 424, 771, 58, 666, 374, 802, 246, 907,
+							722, 244, 506, 798, 996, 790, 776, 627, 516, 569, 436,
+							409, 823, 267, 117, 535, 414, 578, 121, 717, 567, 156,
+							477, 603, 804, 594, 542, 195, 359, 957, 187, 384, 59,
+							733, 20, 468, 629, 753, 214, 651, 645, 832, 429, 269,
+							287, 873, 751, 867, 419, 890, 699, 578, 196, 594, 505,
+							697, 209, 278, 497, 217, 932, 832, 851, 708, 842, 441,
+							974};
+		ans = 31729;
+		testCase(blocks, ans, ++i);
+		
+		blocks = new int[] {512, 98, 619, 512, 86, 866, 23, 446, 241, 630, 539,
+							405, 91, 150, 922, 19, 500, 663, 960, 673, 665, 924,
+							345, 733, 833, 226, 952, 522, 959, 563, 472, 955, 977,
+							626, 791, 422, 618, 604, 458, 580, 184, 140, 610, 23,
+							609, 838, 645, 398, 544, 148, 533, 28, 387, 276, 45,
+							497, 165, 286, 535, 489, 912, 201, 899, 575, 872, 717,
+							769, 606, 136, 370, 395, 647, 392, 928, 324, 398, 344,
+							668, 95, 300, 680, 551, 564, 417, 357, 469, 399, 48,
+							398, 74, 852, 55, 590, 65, 180, 75, 529, 193, 808, 290,
+							896, 697, 493, 457, 652, 623, 9, 902, 434, 460, 425,
+							678, 507, 834, 56, 896, 86, 201, 188, 736, 585, 593,
+							298, 623, 148, 748, 488, 609, 106, 43, 570, 144, 247,
+							666, 259, 459, 854, 177, 122, 480, 821, 860, 460, 102,
+							910, 726, 16, 474, 964, 284, 204, 494, 849, 75, 103, 
+							40, 284, 978, 630, 513, 459, 696, 677, 592, 807, 290, 
+							179, 513, 905, 300, 677, 439, 865, 57, 549, 844, 381, 
+							695, 473, 542, 975, 996, 644, 304, 550, 902, 303, 669, 
+							803, 577, 21, 145, 454, 37, 199, 850, 819, 43, 444, 112};
+		ans = 58219;
+		testCase(blocks, ans, ++i);
+		
+		blocks = new int[] {25, 72, 83, 56, 30, 65, 54, 77, 11, 93, 47, 94, 33, 24,
+							9, 12, 93, 20, 25, 3, 3, 80, 86, 12, 10, 77, 47, 35, 79,
+							98, 99, 3, 50, 93, 93, 66, 3, 85, 94, 1, 24, 80, 63, 79,
+							81, 67, 81, 97, 7, 86, 70, 57, 77, 44, 99, 7, 89, 27, 46,
+							24, 7, 99, 87, 15, 72, 6, 7, 60, 94, 70, 44, 22, 2, 15,
+							57, 70, 4, 33, 41, 55, 41, 86, 51, 61, 35, 70, 98, 7, 94,
+							29, 27, 24, 30, 39, 68, 75, 75, 46, 48, 48, 15, 19, 29, 
+							49, 7, 48, 48, 7, 21, 49, 69, 19, 23, 98, 8, 30, 70, 81, 
+							36, 9, 97, 57, 36, 16, 82, 63, 87, 40, 20, 31, 22, 13,
+							67, 17, 37, 4, 14, 47, 86, 53, 24, 52, 9, 21, 44, 29, 8,
+							25, 75, 36, 35, 15, 4, 72, 95, 12, 64, 40, 59, 97, 19, 
+							100, 70, 41, 67, 85, 83, 1, 48, 32, 100, 3, 25, 52, 66,
+							20, 68, 48, 65, 13, 25, 62, 79, 68, 7, 42, 16, 85, 7, 
+							38, 36, 39, 6, 84, 79, 99, 55, 29, 97, 3, 52, 6, 8, 59,
+							36, 10, 10, 2, 35, 97, 20, 50, 78, 23, 32, 51, 52, 36, 
+							48, 76, 55, 13, 46, 2, 86, 44, 38, 73, 24, 33, 85, 17, 
+							17, 9, 38, 54, 77, 38, 35, 12, 82, 48, 84, 82, 15, 7, 
+							60, 19, 66, 71, 68, 60, 23, 2, 29, 8, 78, 37, 58, 50, 
+							2, 88, 2, 49, 72, 18, 56, 0, 25, 91, 52, 81, 13, 58, 75, 
+							63, 12, 87, 22, 63, 0, 16, 8, 73, 15, 2, 11, 95, 4, 67,
+							96, 22, 93, 72, 48, 1, 16, 43, 11, 57, 7, 77, 20, 25, 7,
+							85, 77, 46, 17, 89, 58, 32, 99, 13, 90, 9, 21, 20, 43, 92,
+							38, 24, 53, 83, 17, 79, 60, 51, 4, 61, 44, 44, 4, 89, 13,
+							64, 70, 53, 41, 88, 82, 37, 97, 82, 66, 40, 86, 42, 42, 68,
+							46, 76, 20, 36, 82, 88, 3, 4, 73, 67, 45, 52, 61, 85, 60,
+							59, 32, 75, 11, 84, 29, 76, 15, 63, 19, 31, 74, 28, 70, 87,
+							31, 67, 16, 32, 30, 92, 80, 44, 80, 32, 83, 3, 30, 23, 21, 
+							44, 29, 77, 50, 69};
+		ans = 11441;
+		testCase(blocks, ans, ++i);
+	  	blocks = new int[] {};
+        ans = 0;
+        testCase(blocks, ans, ++i);
+
+        blocks = new int[] {1};
+        ans = 1;
+        testCase(blocks, ans, ++i);
+
+        blocks = new int[] {1,3};
+        ans = 3;
+        testCase(blocks, ans, ++i);
+        
+        blocks = new int[] {2,4,3};
+        ans = 5;
+        testCase(blocks, ans, ++i);
+	}
+}

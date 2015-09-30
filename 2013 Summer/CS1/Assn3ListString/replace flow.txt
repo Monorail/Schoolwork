@@ -1,0 +1,136 @@
+record place of the key
+record place after key
+create LL to replace key elem
+record place of last elem in new LL
+set loc = to LL start
+set last LL elem = to place after key
+#include "ListString.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+node *destroyList(node *head){//TA's code
+	node *temp = NULL;
+	while (head != NULL){
+		temp = head;
+		head = head->next;
+		free(temp);
+	}
+	return NULL;
+}
+node *createNode(char data){//prof's code
+	node *ptr = malloc(sizeof(node));
+	ptr->data = data;
+	ptr->next = NULL;
+	return ptr;
+}
+// Insert a new node at the end of the linked list.
+node *insert(node *head, char data){//TA code
+	node *ptr = NULL;
+
+	// If the list is empty, just create a new node and return.
+	if (head == NULL)
+		return createNode(data);
+
+	// Find the last node in the list.
+	for (ptr = head; ptr->next != NULL; ptr = ptr->next)
+		;
+
+	// Now 'ptr' is pointing to the last node. Set it up so its 'next' field
+	// points to the new node we're creating.
+	ptr->next = createNode(data);
+
+	// Return the head of the list so we preserve 'head' in main().
+	return head;
+}
+node *frontInsert(node *head, char data){//prof's code
+	node *ptr = createNode(data);
+	ptr->next = head;
+	return ptr;
+}
+
+node *middleInsert(node *head, char data){
+    printf("inserting %c before %c\n",data,head->data);
+    node *temp = malloc(sizeof(node));
+    printf("strpying\n");
+    printf("noding\n");
+    node *previousNext = head->next;
+    head->next = temp;
+    temp->next = head->next;
+    return head->next;
+}
+void printList(node *head){//TA's code
+	node *ptr = NULL;
+	if (head == NULL)
+		printf("(empty)\n");
+	for (ptr = head; ptr != NULL; ptr = ptr->next)
+		printf("%c", ptr->data);
+    printf("\n");
+}
+int main(void){
+    char *str = "hello\0";
+    //printf("%s\n",str);
+    node *head = stringToList(str);
+    head=replaceChar(head,'e',"poop");
+//    node *head = createNode('a');
+//    head = insertNode(head,'b');
+//    printf("%c\n",head->data);
+//    printf("%c\n",head->next->data);
+    printList(head);
+    return 0;
+}
+node *stringToList(char *str){
+    if (str == NULL || str[0] == '\0')
+        return NULL;
+    int ctr = 0;
+    //printf("adding %c\n",str[ctr]);
+    node *head = createNode(str[ctr++]);
+    while(str[ctr] != '\0'){
+        //printf("adding %c\n",str[ctr]);
+        head = insert(head, str[ctr++]);
+    }
+    return head;
+}
+
+node *replaceChar(node *head, char key, char *str){
+    if (str == NULL  || str[0] == '\0')
+        return NULL;
+    int  i =0;
+    int ctr = 0;
+    node *ptr1= NULL;//LL iterator
+    node *tempEnd= NULL;//last element of the LL to be inserted
+    node *endHolder= NULL;//element after the element to be replaced in main LL
+    node *tempBeg= NULL;//LL replacing key char
+    node *repHolder= NULL;//location of the key
+	for (ptr1 = head,i =0; ptr1->next != NULL; ptr1 = ptr1->next)
+		if(ptr1->next->data==key){
+		    tempBeg = stringToList(str);
+		    tempEnd=tempBeg;
+            while(tempEnd!=NULL){
+                tempEnd = tempEnd->next;
+            }
+            
+		}
+    return head;
+}
+/*
+hello e->poop
+hpoopllo
+LL: hello
+create LL: poop
+h->next poop[0]
+hpoop
+hpllo
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+

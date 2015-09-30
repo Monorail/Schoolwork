@@ -1,0 +1,15 @@
+import java.util.concurrent.Semaphore;
+
+
+public class PrimeTester implements Runnable {
+	int ID;
+	Semaphore sem;
+	public PrimeTester(int ID, Semaphore Sem){
+		this.ID = ID;
+		this.sem = sem;
+	}
+	
+	public void run() {
+		
+	}
+}

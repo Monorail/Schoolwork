@@ -1,0 +1,4 @@
+INDEX VERSION 1.127+E:\Dropbox\School\Parallel Algorithms\PAWS\.metadata\.plugins\org.eclipse.jdt.core
+807971552.index
+802024927.index
+933020439.index

@@ -1,0 +1,6 @@
+record place of the key
+record place after key
+create LL to replace key elem
+record place of last elem in new LL
+set loc = to LL start
+set last LL elem = to place after key

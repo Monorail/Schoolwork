@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename method &apos;Prime.numIsPrime(...)&apos; to &apos;isPrime&apos;&#x0D;&#x0A;- Original project: &apos;Problem 1&apos;&#x0D;&#x0A;- Original element: &apos;Prime.numIsPrime(...)&apos;&#x0D;&#x0A;- Renamed element: &apos;Prime.isPrime(...)&apos;&#x0D;&#x0A;- Update references to refactored element" delegate="false" deprecate="false" description="Rename method &apos;numIsPrime&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.method" input="/src&lt;{Prime.java[Prime~numIsPrime~I" name="isPrime" references="true" stamp="1422313380133" version="1.0"/>
+</session>

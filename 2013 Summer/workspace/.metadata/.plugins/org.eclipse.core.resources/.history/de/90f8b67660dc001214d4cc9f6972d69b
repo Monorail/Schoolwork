@@ -1,0 +1,22 @@
+
+public class Card {
+	int face, suit;
+	public Card(int face, int suit){
+		this.face = face;
+		this.suit = suit;
+	}
+	public int getFace(){
+		return face;
+	}
+
+	public int getSuit(){
+		return suit;
+	}
+	public void setFace(int val){
+		this.face= val;
+	}
+	public void setSuit(int val){
+		this.suit = val;
+	}
+	
+}

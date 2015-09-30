@@ -1,0 +1,140 @@
+public class notmain {
+	public static void main(String[] args) {
+		final int handSize = 5;
+		Deck dick = new Deck();
+		dick.printDeck();
+		Card[] hand1 = new Card[handSize];
+		Card[] hand2 = new Card[handSize];
+		Card[] hand1Sorted =new Card[handSize];
+		Card[] hand2Sorted =new Card[handSize];
+		for (int i = 0; i < handSize; i++) {
+			hand1[i] =  dick.deal();
+			hand1Sorted[i] = new Card(hand1[i].getFace(),hand1[i].getSuit());
+
+			hand2[i] =  dick.deal();
+			hand2Sorted[i] = new Card(hand2[i].getFace(),hand2[i].getSuit());
+		}
+		hand1[0] = new Card(2, 2);
+		hand1[1] = new Card(1, 2);
+		hand1[2] = new Card(5, 2);
+		hand1[3] = new Card(4, 2);
+		hand1[4] = new Card(6, 2);
+		
+		hand2[0] = new Card(2, 2);
+		hand2[1] = new Card(1, 2);
+		hand2[2] = new Card(5, 2);
+		hand2[3] = new Card(4, 2);
+		hand2[4] = new Card(6, 2);
+		sortHand(hand1Sorted);
+		sortHand(hand2Sorted);
+	}
+	
+	static int diff(Card[] hand1, Card[] hand2, int pos){
+		for(int i = pos; i< hand1.length;i++)
+			if(hand1[i].getFace() > hand2[i].getFace())
+				return 1;
+			else if(hand1[i].getFace() < hand2[i].getFace())
+				return 2;
+		return -1;
+	}
+	
+	static int straight(Card[] hand){
+		for(int i = 0; i<hand.length-1;i++){
+			if (!(hand[i].getFace() == hand[i+1].getFace()))
+					return -1;
+		}
+		for(int i = 0;i<4;i++){
+			if(numOfFace(hand, i) != 4)
+				return hand[4].getFace();
+		}
+		return -1;
+	}
+	static int flush(Card[] hand){
+		for(int i = 0; i<hand.length-1;i++){
+			if (!(hand[i].getSuit() == hand[i+1].getSuit()))
+					return -1;
+		}
+		return hand[0].getSuit();
+	}
+	
+	//oak = "of a kind"
+	static int fourOak(Card[] hand){
+		for(int i = 0;i<13;i++)
+			if (numOfFace(hand, i) == 4)
+				return i;
+		return -1;
+	}
+	static int threeOak(Card[] hand){
+		for(int i = 0;i<13;i++)
+			if (numOfFace(hand, i) == 3)
+				return i;
+		return -1;
+	}
+	
+	static int highPair(Card[] hand) {
+		int high = -1;
+		for (int i = 0; i < hand.length; i++)
+			for (int j = 0; j < hand.length; j++)
+				if (hand[i].getFace() == hand[j].getFace() && i != j && hand[i].getFace() > high) {
+					high = hand[i].getFace();
+				}
+		return high;
+	}
+
+	static int lowPair(Card[] hand) {
+		int high = -1;
+		for (int i = 0; i < hand.length; i++)
+			for (int j = 0; j < hand.length; j++)
+				if (hand[i].getFace() == hand[j].getFace() && i!=j) {
+					if (high == -1)
+						high = hand[i].getFace();
+					else if (high > hand[i].getFace())
+						high = hand[i].getFace();
+				}
+		return high;
+	}
+
+	static int highCard(Card[] hand) {
+		int high = -1;
+		for (int i = 0; i < hand.length; i++) {
+			if (hand[i].getFace() > high)
+				high = hand[i].getFace();
+		}
+		return high;
+	}
+
+	static void printHands(Card[] hand1, Card[] hand2) {
+		System.out.printf("%s\t\t\t%-30s\n", "Player 1", "Player 2");
+		for (int i = 0; i < hand1.length; i++) {
+			System.out.print(hand1[i]);
+			System.out.printf("\t\t\t%-30s\n", hand2[i]);
+		}
+	}
+	static int numOfSuit(Card[] hand, int suit){
+		int ctr = 0;
+		for (int i =0;i<hand.length;i++){
+			if (hand[i].getSuit() == suit)
+				ctr++;
+		}
+		return ctr;
+	}
+	static int numOfFace(Card[] hand, int face){
+		int ctr = 0;
+		for (int i =0;i<hand.length;i++){
+			if (hand[i].getFace() == face)
+				ctr++;
+		}
+		return ctr;
+	}
+	static void sortHand(Card[] hand){
+		Card tempCard;
+		for(int i = 0;i<hand.length;i++){
+			for(int j = 0;j<hand.length;j++)
+				if(hand[i].getFace()<hand[j].getFace()){
+					tempCard = hand[i];
+					hand[i] = hand[j];
+					hand[j] = tempCard;
+				}
+		}
+	}
+}

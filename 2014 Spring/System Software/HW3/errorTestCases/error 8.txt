@@ -1,0 +1,6 @@
+int x;
+begin
+	x := 3;
+	while x > 3 
+	write x;
+end.

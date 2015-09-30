@@ -1,0 +1,62 @@
+
+public class RunLikeHell {
+
+	/**
+	 * @param args
+	 */
+	static int arr[] = {1,10,8,3,12,1,2,20,20,30};
+	static int DParr[];
+	public static void main(String[] args) {
+		System.out.println(maxGain(arr));
+	}
+	
+	public static int maxGain(int [] blocks){
+		/*
+		Given an array of positive integers containing the block values that the algorithmist will encounter (in
+		order, from left to right), return the maximum knowledge the algorithmist can gain before making his
+		way safely off the mountain. Recall that the algorithmist’s speed and trajectory prevent him from ever
+		hitting two blocks that are right next to each other.
+		You must use an O(n) dynamic programming solution to receive credit. I suggest starting with a top-
+		down recursive algorithm and then transforming it into a bottom-up DP approach using the technique
+		taught in class.
+		*/ 
+		arr= blocks;
+		DParr = new int[arr.length];
+		for(int i = 0;i < DParr.length;i++)
+			DParr[i] = 0;
+		DParr[0] = arr[0];
+		DParr[1] = arr[1];
+		DParr[2] = arr[2];
+		for(int i = 3;i < arr.length;i++){
+			DParr[i] = arr[i] + Math.max(DParr[i-2],DParr[i-3]);
+		}
+		for(int i = 0;i<DParr.length;i++){
+			System.out.print(i + " ");
+		}
+		System.out.println();
+		for(int i = 0;i<DParr.length;i++){
+			System.out.print(DParr[i] + " ");
+		}
+		return Math.max(DParr[DParr.length-1],DParr[DParr.length-2]);
+	}
+	
+	public static int recurGain(int pos){
+		if(pos >= arr.length)
+			return 0;
+		return Math.max(
+					recurGain(pos+1),//keep running
+				Math.max(
+					recurGain(pos+2)+getElem(arr,pos), //hit block, run 1
+					recurGain(pos+3)+getElem(arr,pos) //hit block, run 2
+				));
+	}
+	public static int getElem(int[] arr, int pos){
+		return (pos>=arr.length)?0:arr[pos];
+	}
+	public static double difficultyRating(){
+		return 3;
+	}
+	public static double hoursSpent(){
+		return 3;
+	}
+}

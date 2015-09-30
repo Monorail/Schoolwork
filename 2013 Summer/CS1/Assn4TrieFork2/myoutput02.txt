@@ -1,0 +1,8 @@
+spin
+- gold (1)
+- straw (1)
+- to (1)
+spindle
+(INVALID STRING)
+nikstlitslepmur
+(INVALID STRING)

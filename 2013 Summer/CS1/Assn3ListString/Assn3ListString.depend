@@ -1,0 +1,8 @@
+# depslib dependency file v1.0
+1372459913 source:c:\dropbox\school\cs1\assn3liststring\liststring.c
+	"ListString.h"
+	<stdio.h>
+	<stdlib.h>
+
+1372119604 c:\dropbox\school\cs1\assn3liststring\liststring.h
+

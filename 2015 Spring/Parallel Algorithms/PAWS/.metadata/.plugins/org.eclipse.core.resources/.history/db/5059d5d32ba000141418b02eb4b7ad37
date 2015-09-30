@@ -1,0 +1,15 @@
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+
+public class Main {
+	static AtomicBoolean b = new AtomicBoolean();
+	static int numThreads=8;
+	static Semaphore sem = new Semaphore(numThreads);
+	public static void main(String[] args) {
+		Main main = new Main();
+		Thread th = new Thread();
+		b.set(true);
+	}
+
+}

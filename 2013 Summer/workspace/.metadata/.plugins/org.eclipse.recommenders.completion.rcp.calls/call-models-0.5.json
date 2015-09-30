@@ -1,0 +1,17 @@
+{
+  "C:\\Dropbox\\workspace\\OOPAssn3\\src": {
+    "location": "C:\\Dropbox\\workspace\\OOPAssn3\\src",
+    "status": "UNRESOLVED",
+    "error": "No class path info available for \u0027C:\\Dropbox\\workspace\\OOPAssn3\\src\u0027. Skipped."
+  },
+  "C:\\Program Files\\Java\\jre7\\lib\\rt.jar": {
+    "coordinate": "jre:jre:zip:call:1.0.0",
+    "location": "C:\\Program Files\\Java\\jre7\\lib\\rt.jar",
+    "status": "RESOLVED"
+  },
+  "C:\\Dropbox\\workspace\\OOPAssn3 Fork\\src": {
+    "location": "C:\\Dropbox\\workspace\\OOPAssn3 Fork\\src",
+    "status": "UNRESOLVED",
+    "error": "No class path info available for \u0027C:\\Dropbox\\workspace\\OOPAssn3 Fork\\src\u0027. Skipped."
+  }
+}

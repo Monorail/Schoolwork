@@ -1,0 +1,304 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class crcfile {
+	static String poly = "10000100110001101";
+	static int polyLen = poly.length();
+
+	public static void main(String[] args) throws FileNotFoundException {
+		//check to see if the arguments are valid
+		if ((args.length < 2) || args.length > 3 || args[0].length() != 1 || (args[0].charAt(0) != 'c' && args[0].charAt(0) != 'v')) {
+			System.err.println("No or invalid arguments passed.\nc: CRC calculation\nv: CRC verification");
+			System.exit(0);
+		}
+
+		File f = new File(args[1]);
+		//exits if the file doesn't exist
+		if (!f.exists()) {
+			System.err.println("The file " + args[1] + " does not exist.");
+			System.exit(0);
+		}
+		//exits if the input file is invalid
+		if (!isValidInput(f)) {
+			System.err.println("The given input is not valid!");
+			System.exit(0);
+		}
+		//receive the input file
+		String crcBin = readInputFile(f);
+		System.out.println("The polynomial that was used: " + formatBin(poly));
+		//performs some prints specific to the verify mode
+		if (args[0].charAt(0) == 'v') {
+			String ver = crcBin.substring(crcBin.length() - polyLen + 1, crcBin.length());
+			System.out.printf("The " + (polyLen - 1) + "-bit CRC observed at the end of the file:\n%s (hex) = %s (bin)\n", formatBin(ver),
+					binToHex(ver));
+		}
+
+		//performs some prints specific to the calculate mode
+		if (args[0].charAt(0) == 'c') {
+			for (int i = 0; i < polyLen - 1; i++)
+				crcBin += "0";
+			System.out.println("We will append " + (polyLen - 1) + " zeros at the end of the binary input.");
+		}
+		System.out.println("The binary string answer at each XOR step of CRC calculation:");
+		//calculate the checksum
+		crcBin = calcCRC(crcBin);
+		System.out.printf("The computed CRC for this file is %s(bin) = %s (hex)\n", formatBin(crcBin), binToHex(crcBin));
+		if (args[0].charAt(0) == 'v')
+			System.out.printf("Did the CRC check pass? (Yes or No): %s.\n", verCRC(crcBin) ? "Yes" : "No");
+	}
+
+	//verifies the validity of the checksum by making sure that the result of the checksum calculation is all zeros
+	public static boolean verCRC(String input) {
+		for (char c : input.toCharArray()) {
+			if (c != '0')
+				return false;
+		}
+		return true;
+	}
+
+	//formats the binary for printing. Adds spaces and newlines to make each line 80 characters long
+	public static String formatBin(String input) {
+		String result = "";
+		//add spaces to the binary string
+		for (int i = input.length() - 1, j = 0; i > -1; i--, j++) {
+			if (j % 4 == 0)
+				result = " " + result;
+			result = input.charAt(i) + result;
+		}
+		
+		//replace every 16th space with a newline
+		char[] fixNewlines = result.toCharArray();
+		int numSpcs = 0;
+		int i = 0;
+		while (i < fixNewlines.length) {
+			if (fixNewlines[i] == ' ')
+				numSpcs++;
+			if (numSpcs == 16) {
+				fixNewlines[i] = '\n';
+				numSpcs = 0;
+			}
+			i++;
+		}
+		//removes the first space from the string, sometimes occurs.
+		result = new String(fixNewlines);
+		if (result.charAt(0) == ' ')
+			return result.substring(1);
+
+		return result;
+	}
+	
+	//
+	public static String calcCRC(String input) {
+		if (input.length() == 0)
+			return null;
+		int numZeros = 0;
+		while (input.charAt(numZeros) == '0') {
+			numZeros++;
+		}
+		while (!(numZeros + poly.length() > input.length())) {
+			System.out.println(formatBin(input) + "\n");
+			input = XOR(poly, input);
+			numZeros = 0;
+			while (numZeros < input.length() && input.charAt(numZeros) == '0') {
+				numZeros++;
+			}
+		}
+		System.out.println(formatBin(input));
+		return input.substring(input.length() - polyLen + 1, input.length());
+	}
+	
+	//performs XOR on the input starting at the first 1 and continuing for the length of the polynomial
+	public static String XOR(String poly, String input) {
+		char[] toDivide = input.toCharArray();
+		int numZeros = 0;
+		while (input.charAt(numZeros) == '0') {
+			numZeros++;
+		}
+		// System.out.println("Starting at " + numZeros);
+		for (int i = numZeros, j = 0; i < numZeros + polyLen; i++, j++) {
+			if (poly.charAt(j) == input.charAt(i))
+				toDivide[i] = '0';
+			else
+				toDivide[i] = '1';
+		}
+		return new String(toDivide);
+	}
+
+	//verifies that the input is all valid hex characters
+	public static boolean isValidInput(File file) throws FileNotFoundException {
+		Scanner sc = new Scanner(file);
+		sc.useDelimiter("");
+		int numChars = 0;
+		String temp;
+		while (sc.hasNext()) {
+			if (!(temp = sc.next().toUpperCase()).matches("[A-F0-9]")) {
+				System.out.println("Invalid char" + temp);
+				return false;
+			}
+		}
+		return true;
+	}
+	//converts a hex string into a binary string
+	public static String hexToBin(String input) {
+		String out = "";
+		for (int i = 0; i < input.length(); i++) {
+			switch (input.charAt(i) + "") {
+			case ("0"):
+				out += "0000";
+				break;
+			case ("1"):
+				out += "0001";
+				break;
+			case ("2"):
+				out += "0010";
+				break;
+			case ("3"):
+				out += "0011";
+				break;
+			case ("4"):
+				out += "0100";
+				break;
+			case ("5"):
+				out += "0101";
+				break;
+			case ("6"):
+				out += "0110";
+				break;
+			case ("7"):
+				out += "0111";
+				break;
+			case ("8"):
+				out += "1000";
+				break;
+			case ("9"):
+				out += "1001";
+				break;
+			case ("A"):
+				out += "1010";
+				break;
+			case ("B"):
+				out += "1011";
+				break;
+			case ("C"):
+				out += "1100";
+				break;
+			case ("D"):
+				out += "1101";
+				break;
+			case ("E"):
+				out += "1110";
+				break;
+			case ("F"):
+				out += "1111";
+				break;
+			}
+		}
+		return out;
+	}
+	
+	//converts a binary string into a hex string
+	public static String binToHex(String input) {
+		String out = "";
+		for (int i = 0; i < input.length() / 4; i++) {
+			switch (input.subSequence(i * 4, i * 4 + 4) + "") {
+			case ("0000"):
+				out += "0";
+				break;
+			case ("0001"):
+				out += "1";
+				break;
+			case ("0010"):
+				out += "2";
+				break;
+			case ("0011"):
+				out += "3";
+				break;
+			case ("0100"):
+				out += "4";
+				break;
+			case ("0101"):
+				out += "5";
+				break;
+			case ("0110"):
+				out += "6";
+				break;
+			case ("0111"):
+				out += "7";
+				break;
+			case ("1000"):
+				out += "8";
+				break;
+			case ("1001"):
+				out += "9";
+				break;
+			case ("1010"):
+				out += "A";
+				break;
+			case ("1011"):
+				out += "B";
+				break;
+			case ("1100"):
+				out += "C";
+				break;
+			case ("1101"):
+				out += "D";
+				break;
+			case ("1110"):
+				out += "E";
+				break;
+			case ("1111"):
+				out += "F";
+				break;
+			}
+		}
+		return out;
+	}
+	
+	//takes in the file where the input is located and returns the converted binary characters
+	public static String readInputFile(File file) throws FileNotFoundException {
+		Scanner sc = new Scanner(file);
+		sc.useDelimiter("");
+		// scan input file and print contents in lines of 80
+		String out = "", strTemp;
+		int i = 0;
+		System.out.println("The input file(hex):");
+		while (sc.hasNext()) {
+			strTemp = sc.next().toUpperCase();
+			if (strTemp == null)
+				continue;
+			if (!strTemp.matches("[A-F0-9]")) {
+				System.err.println("\nInvalid input! " + strTemp);
+				System.exit(0);
+			}
+			System.out.print(strTemp);
+			out += strTemp;
+			i++;
+			if (i == 80) {
+				i = 0;
+				System.out.println();
+			}
+		}
+		// convert input to Binary
+		String inputBin = hexToBin(out);
+		sc = new Scanner(inputBin);
+		sc.useDelimiter("");
+		i = 0;
+		System.out.println();
+		System.out.println("The input file(bin):");
+		while (sc.hasNext()) {
+			strTemp = sc.next();
+			System.out.print(strTemp);
+			i++;
+			if (i % 4 == 0)
+				System.out.print(" ");
+			if (i == 64) {
+				i = 0;
+				System.out.println();
+			}
+		}
+		System.out.println();
+		sc.close();
+		return inputBin;
+	}
+}

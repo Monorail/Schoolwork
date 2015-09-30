@@ -1,0 +1,1 @@
+g++ lockingdockers.cpp -pthread -std=c++11 && a.exe

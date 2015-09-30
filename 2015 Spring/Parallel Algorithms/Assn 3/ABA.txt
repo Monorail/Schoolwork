@@ -1,0 +1,25 @@
+ABA
+
+ h
+   t
+|abc|
+
+t1 start rm a
+  h 
+   t
+| bc|
+
+t2 start add d
+  h 
+ t 
+|dbc|
+
+t1 fin ret d
+  h 
+ t 
+|dbc|
+
+temp = a (add d) f
+head ++  (add d) f
+size--;  (add d) s
+ret temp (add d) s 

@@ -1,0 +1,9 @@
+This zip file contains a progam named "HillCipher.jar" which takes in a key matrix file and a body of text and encrypts it using the Hill Cipher.
+
+Instructions on how to use this program are as follows:
+
+1. Extract the contents of this zip to a folder
+2. Open a terminal pointing to the directory with the zip contents
+3. run the command "java -jar HillCipher.jar" 
+4. Enter the values, "key.txt", then "body.txt", then enter the desired file name for the outputted encrypted text
+5. The encrypted text will appear as output in the same directory. This file should be compared to the given file "output.txt" to verify its accuracy

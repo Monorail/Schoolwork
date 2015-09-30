@@ -1,0 +1,11 @@
+import java.util.concurrent.Semaphore;
+
+
+public class Main {
+	public static void main(String[] args) {
+		int numThreads=8;
+		Semaphore sem = new Semaphore(numThreads);
+		
+	}
+
+}

@@ -1,0 +1,15 @@
+import java.io.FileWriter;
+import java.io.PrintWriter;
+
+
+public class fauxpas {
+	public static void main(String args[]){
+		
+		PrintWriter out = new PrintWriter(new FileWriter("K:\\location\\outputfile.txt"))); 
+		out.print("Hello "); 
+		out.println("world"); 
+		out.close();
+	}
+	
+	
+}

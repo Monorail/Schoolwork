@@ -1,0 +1,17 @@
+import java.io.IOException;
+import java.net.ServerSocket;
+
+
+public class theserver {
+	public static void main(String[] args) {
+	    ServerSocket MyService;
+	    try {
+	       MyService = new ServerSocket(2000);
+	        }
+	        catch (IOException e) {
+	           System.out.println(e);
+	        }
+
+	}
+
+}

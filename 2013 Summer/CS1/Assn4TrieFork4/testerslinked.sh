@@ -1,0 +1,13 @@
+gcc Trie.c && ./a.out corpus01.txt input01.txt > myoutput01.txt && diff myoutput01.txt output01.txt 
+gcc Trie.c && ./a.out corpus02.txt input02.txt > myoutput02.txt && diff myoutput02.txt output02.txt 
+gcc Trie.c && ./a.out corpus03.txt input03.txt > myoutput03.txt && diff myoutput03.txt output03.txt 
+gcc Trie.c && ./a.out corpus04.txt input04.txt > myoutput04.txt && diff myoutput04.txt output04.txt 
+gcc Trie.c && ./a.out corpus05.txt input05.txt > myoutput05.txt && diff myoutput05.txt output05.txt 
+gcc Trie.c && ./a.out corpus06.txt input06.txt > myoutput06.txt && diff myoutput06.txt output06.txt 
+gcc Trie.c && ./a.out corpus07.txt input07.txt > myoutput07.txt && diff myoutput07.txt output07.txt 
+gcc Trie.c && ./a.out cooper-corpus01.txt cooper-input01.txt > cooper-myoutput01.txt && diff cooper-myoutput01.txt cooper-output01.txt
+gcc Trie.c && ./a.out cooper-corpus02.txt cooper-input02.txt > cooper-myoutput02.txt && diff cooper-myoutput02.txt cooper-output02.txt
+gcc Trie.c && ./a.out cooper-corpus03.txt cooper-input03.txt > cooper-myoutput03.txt && diff cooper-myoutput03.txt cooper-output03.txt
+gcc Trie.c && ./a.out cooper-corpus04.txt cooper-input04.txt > cooper-myoutput04.txt && diff cooper-myoutput04.txt cooper-output04.txt
+gcc Trie.c && ./a.out cooper-corpus04.txt cooper-input04.txt > cooper-myoutput04.txt && diff cooper-myoutput04.txt cooper-output04.txt
+gcc Trie.c && ./a.out sz-corpus.txt sz-input.txt > sz-myoutput.txt && diff sz-myoutput.txt sz-output.txt

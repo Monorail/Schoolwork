@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;Program2CRC/iv.txt&apos; to &apos;verify.txt&apos;" description="Rename resource &apos;iv.txt&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="iv.txt" name="verify.txt" stamp="1384548475277" updateReferences="true"/>
+</session>

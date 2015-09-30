@@ -1,0 +1,17 @@
+# depslib dependency file v1.0
+1370039906 source:c:\dropbox\programming\c\arraylist\alfinal\arraylist.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"ArrayList.h"
+
+1368600352 c:\dropbox\programming\c\arraylist\alfinal\arraylist.h
+
+1370057998 source:c:\dropbox\programming\c\arraylist\al no realloc\arraylist.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"ArrayList.h"
+
+1368600352 c:\dropbox\programming\c\arraylist\al no realloc\arraylist.h
+

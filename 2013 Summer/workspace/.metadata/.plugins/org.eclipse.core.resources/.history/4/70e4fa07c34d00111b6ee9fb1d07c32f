@@ -1,0 +1,33 @@
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+
+public class herpaderp {
+	public static void main(String[] args) {
+	    Socket MyClient;
+	    try {
+	           MyClient = new Socket("Machine name", 2000);
+	    }
+	    catch (IOException e) {
+	        System.out.println(e);
+	    }
+	    
+	    ServerSocket MyService = null;
+	    try {
+	       MyService = new ServerSocket(2000);
+	        }
+	        catch (IOException e) {
+	           System.out.println(e);
+	        }
+	    
+	    Socket clientSocket = null;
+	    try {
+	       clientSocket = MyService.accept();
+	        }
+	    catch (IOException e) {
+	       System.out.println(e);
+	    }
+	}
+
+}

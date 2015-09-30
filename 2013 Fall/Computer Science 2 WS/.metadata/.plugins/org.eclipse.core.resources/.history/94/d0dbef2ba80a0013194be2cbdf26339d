@@ -1,0 +1,16 @@
+package canHasTarget;
+
+public class CHT {
+
+	public static void main(String[] args) {
+
+	}
+	public static boolean canHasTarget(int []array,int target){
+		int len = array.length;
+		for(int i = 0;i<len;i++)
+			if(array[i] + array[len-i]==target)
+				return true;
+		return false;
+	}
+
+}

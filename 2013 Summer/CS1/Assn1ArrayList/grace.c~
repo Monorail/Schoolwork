@@ -1,0 +1,151 @@
+/*Grace Anderson
+g2730269
+COP-3502C
+ArrayList.c*/
+ 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "ArrayList.h"
+#define LEN 10
+ 
+int main(void){
+	return 0;}
+ 
+ArrayList *createArrayList(int length)
+{
+        int i;
+        ArrayList *crttemp =(ArrayList *) malloc(sizeof(ArrayList));
+        /* checks length to see which is longer*/
+        if (length<DEFAULT_INIT_LEN)
+                length = DEFAULT_INIT_LEN;
+ 
+        /* intialization of variables*/
+        crttemp->size = 0;
+        crttemp->capacity = length;
+        crttemp->array = NULL;
+        crttemp->array = malloc(sizeof(char *) * length);
+        for (i = 0; i<crttemp->capacity; i++)
+        {
+        crttemp->array[i] = malloc(sizeof(char) * LEN);
+        }
+        crttemp->capacity = length;
+        printf("-> Created new ArrayList of size %d.\n",crttemp->capacity);
+        return crttemp;
+}
+ArrayList *destroyArrayList(ArrayList *list)
+{
+    int i;
+    /*free up all memory currently in use*/
+        for (i = 0; i<list->size; i++)
+    {
+        free(list->array[i]);
+    }
+    free(list->array);
+    free(list);
+    return list;
+}
+ArrayList *expandArrayList(ArrayList *list, int length)
+{
+    int i;
+    if(list->capacity>=length)
+        return list;
+        /*create temp to hold info while expanding.*/
+    ArrayList *exptemp = createArrayList(length);
+    for(i = 0;i<list->size;i++)
+        strcpy(exptemp->array[i],list->array[i]);
+    exptemp->size = list->size;
+    exptemp->capacity = length;
+    printf("-> Expanded ArrayList to size %d.\n",length);
+ 
+        return exptemp;
+}
+ArrayList *trimArrayList(ArrayList *list)
+{
+    int i;
+ 
+    for(i=list->size;i<list->capacity;i++)
+        free(list->array[i]);
+    list->capacity = list->size;
+    printf("-> Trimmed ArrayList to size %d.\n",list->capacity);
+    return list;
+}
+char *put(ArrayList *list, char *str)
+{
+        if (list == NULL)
+                return NULL;
+        if (str == NULL)
+                return NULL;
+        /*check if full*/
+    if (list->capacity == list->size)
+    {
+ 
+        list = expandArrayList(list, (list->capacity)*2+1);
+    }
+    /*place element at end of array*/
+    set(list, list->size,str);
+    list->size++;
+    return list->array[list->size-1];
+}
+char *get(ArrayList *list, int index)
+{
+
+        if (list->size<index)
+        {
+                /*check for out of bounds*/
+                return NULL;
+        }
+        /* return current element*/
+        return list->array[index];
+}
+ 
+char *set(ArrayList *list, int index, char *str)
+{
+        if (list->capacity<index)
+        {
+            /*check for out of bounds*/
+                return NULL;
+        }
+        /*create temp and copy to list after, free temp*/
+        char *temp = strdup(str);
+        strcpy(get(list,index),temp);
+        free(temp);
+        return get(list,index);
+}
+ 
+char *insertElement(ArrayList *list, int index, char *str)
+{
+    int i;
+    /*add string to array and move others over*/
+    for(i = list->size;i>index;i--)
+    {
+        list->array[i] = list->array[i-1];
+    }
+    list->array[i]=str;
+    list->size++;
+    return list->array[index];
+}
+ 
+int removeElement(ArrayList *list, int index)
+{
+    int i;
+    /* take string from array and move others*/
+    for(i = index;i<list->size-1;i++)
+        list->array[i]=list->array[i+1];
+    list->size--;
+    return 0;
+}
+ 
+int getSize(ArrayList *list)
+{
+    if (list==NULL)
+        return -1;
+    return list->size;
+}
+ 
+void printArrayList(ArrayList *list)
+{
+    int i;
+    for (i = 0; i < list->size;i++)
+        printf("#%d: %s\n",i,list->array[i]);
+}

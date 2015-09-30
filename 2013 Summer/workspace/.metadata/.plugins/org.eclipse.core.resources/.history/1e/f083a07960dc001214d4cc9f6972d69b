@@ -1,0 +1,29 @@
+
+public class Card {
+	int face, suit;
+	public Card(String face, String suit){
+		this.face = face;
+		this.suit = suit;
+	}
+	
+	public String toString(){
+		String face, suit;
+		
+		return ;
+	}
+	
+	public int getFace(){
+		return face;
+	}
+
+	public int getSuit(){
+		return suit;
+	}
+	public void setFace(int val){
+		this.face= val;
+	}
+	public void setSuit(int val){
+		this.suit = val;
+	}
+	
+}

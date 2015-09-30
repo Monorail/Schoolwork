@@ -1,0 +1,12 @@
+{
+  "E:\\Dropbox\\CS2WS\\Prog6Maze\\src": {
+    "location": "E:\\Dropbox\\CS2WS\\Prog6Maze\\src",
+    "status": "UNRESOLVED",
+    "error": "No class path info available for \u0027E:\\Dropbox\\CS2WS\\Prog6Maze\\src\u0027. Skipped."
+  },
+  "C:\\Program Files\\Java\\jre7\\lib\\rt.jar": {
+    "coordinate": "jre:jre:zip:call:1.0.0",
+    "location": "C:\\Program Files\\Java\\jre7\\lib\\rt.jar",
+    "status": "RESOLVED"
+  }
+}

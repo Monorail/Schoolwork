@@ -1,0 +1,5 @@
+const 2xc = 3;
+begin
+	write x;
+	
+end.

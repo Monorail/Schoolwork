@@ -1,0 +1,36 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class Isogram {
+	public static void main(String args[]) throws FileNotFoundException {
+		Scanner sc = new Scanner(new File("input.txt"));
+		System.out.println();
+		int numWords = sc.nextInt();
+		for(int i = 0; i < numWords; i++){
+			char[] word = sc.next().toCharArray();
+			int[] bucket = new int[26];
+			boolean invalid = false;
+			for(int j = 0; j < word.length; j++){
+				bucket[(int)word[j] - 'a']++;
+			}
+			int lastNum, curNum;
+			int j = 1;
+			curNum = bucket[0];
+			for( j < 26; j++){
+				lastNum = curNum;
+				curNum = bucket[j];
+				if(bucket[j] == 0) {
+					continue;
+				}
+				if(lastNum != curNum){
+					invalid = true;
+					break;
+				}
+			}
+			System.out.println(word + " is " + ((invalid)? "not ": "") + "an Isogram");
+		}
+		
+		sc.close();
+	}
+}

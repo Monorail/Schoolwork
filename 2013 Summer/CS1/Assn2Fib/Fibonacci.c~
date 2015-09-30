@@ -1,0 +1,197 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include "Fibonacci.h"
+#include "HugeInteger.h"
+
+int main(int argc, char **argv){
+	if (!(argc-1))
+		return 0;
+	foo(argc,argv);
+	Memo *derp = createMemo();
+	int fibnum;
+	int i;
+	//printf("argc = %d\n",argc);
+	derp = createMemo();
+	for(i=1;i<argc;i++){
+		fibnum = atoi(argv[i]);
+		//printf("main(): printing fib(%d)\n",fibnum);
+		HI* printer = fib(fibnum,derp);
+		printf("F(%d): ",fibnum);
+		HugePrint(printer);
+	}
+	destroyMemo(derp);
+	return 0;
+}
+
+void HugePrint(HugeInteger *p){
+	if (p==NULL){
+		printf("(undefined)\n");
+		return;	
+	}
+	int i;
+	for(i = p->length-1;i>=0;i--)
+		printf("%d",p->digits[i]);
+	printf("\n");
+}
+
+Memo *destroyMemo(Memo *memo){
+	
+	int c = 0,j,i;
+	//printf("%d\n",c++);
+	if(memo == NULL)
+		return NULL;
+	//printf("%d\n",c++);
+	for(i = 0;i<memo->length;i++){
+		//printf("%d\n",c++);
+		free(memo->F[i].digits);
+		memo->F[i].digits = NULL;
+	}
+	//printf("%d\n",c++);
+	free(memo->F);
+	memo->F = NULL;
+	//printf("%d\n",c++);
+	free(memo);
+	memo = NULL;
+	//printf("%d\n",c++);
+	return memo;
+
+}
+
+
+Memo *createMemo(void){
+	int i;
+	//Dynamically allocate space for a new Memo struct.
+	Memo *tempMemo = malloc(sizeof(Memo));
+	if (tempMemo == NULL)
+		panic("tempMemo was not allocated correctly!");
+	//Within the Memo struct, dynamically allocate an array of INIT_MEMO_SIZE number of HugeInteger structs.
+	tempMemo->F = malloc(sizeof(HugeInteger) * INIT_MEMO_SIZE);
+	if (tempMemo->F == NULL)
+		panic("tempMemo was not allocated correctly!");
+	//Once the array is created, initialize memo→length appropriately.
+	//Make two calls to HugeInit() to initialize F[0] and F[1] (your two Fibonacci base cases) within the Memo struct.
+	if(!HugeInit(&tempMemo->F[0],0))
+		printf("HugeInit 1 failed");
+	if(!HugeInit(&tempMemo->F[1],1))
+		printf("HugeInit 2 failed");
+	//printf("createMemo(): %d %d\n",tempMemo->F[0].digits[0],tempMemo->F[1].digits[0]);
+	tempMemo->length = INIT_MEMO_SIZE;
+	for(i = 2;i<INIT_MEMO_SIZE;i++){
+	//initialize the digits field to NULL and the length field to 0 to indicate that F[i] has not yet been memoized.
+		tempMemo->F[i].digits = NULL;
+		tempMemo->F[i].length = 0;
+	}
+	//printf("createMemo(): %d %d\n",tempMemo->F[0].digits[0],tempMemo->F[1].digits[0]);
+	return tempMemo;
+}
+
+struct HugeInteger *fib(int n, Memo *memo){
+	//Base 1: F(n) has been memoized
+	//printf("begin\n");
+	if(memo==NULL || n<0)
+	{
+		return NULL;
+	}
+	if(memo->length<=n)
+		expandMemo(memo,n);
+	if(memo->F[n].length != 0){
+		//printf("fib(): hit a valid: ");
+		//HugePrint(&memo->F[n]);
+		return &memo->F[n];
+	}
+	HugeAdd(fib(n-2,memo),fib(n-1,memo),&memo->F[n]);
+	return &memo->F[n];
+}
+
+
+int expandMemo(Memo *memo, int n){
+	int newLen = (memo->length>n?memo->length:n)*2 + 1;
+	//printf("newLen is %d\n",newLen);
+	HugeInteger *temp = malloc(sizeof(HugeInteger) * newLen);
+	int i,k;
+	for(i=0;i<memo->length;i++){
+		temp[i] = memo->F[i];
+		//printf("i\n");
+	}
+	free(memo->F);
+	for(i = memo->length;i<newLen;i++){
+	//initialize the digits field to NULL and the length field to 0 to indicate that F[i] has not yet been memoized.
+		temp[i].digits = NULL;
+		temp[i].length = 0;
+	}
+	memo->F = temp;
+	memo->length = newLen;
+	printf("-> Expanded memo capacity to %d.\n",newLen);
+	return newLen;
+}
+
+
+
+int HugeInit(HugeInteger *p,int n){
+	//printf("HI()1: \t%d\n",n);
+	int i;
+	if (n<0 || n>9|| p==NULL)
+		return 0;
+
+	//dynamically allocate p→digits to be an array of 1 integer.
+	p->digits = malloc(sizeof(int));
+	p->digits[0] = n;
+	//printf("HI()2: \t%d\n",p->digits[0]);
+	p->length = 1;
+	if (p->digits[i] != n) panic("ERROR: out of memory in HugeInit()\n");
+	
+
+	return 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

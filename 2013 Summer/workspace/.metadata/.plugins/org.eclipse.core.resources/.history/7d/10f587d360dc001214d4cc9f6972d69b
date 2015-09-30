@@ -1,0 +1,17 @@
+
+public class Deck {
+	final int numCards = 52;
+	Card[] deck = new Card[numCards];
+	String[] faces = {"ace", "one","two","Three","Four","Five","Six","Seven","Eight","Nine","Ten","Jack","Queen","King"};
+	public Deck(){
+		for(int i = 0; i< numCards;i++){
+			deck[i] = new Card(i%13,i/13);
+		}
+	}
+	
+	public void printDeck(){
+		for(int i = 0; i<numCards;i++)
+			System.out.println(deck[i]);
+	}
+
+}

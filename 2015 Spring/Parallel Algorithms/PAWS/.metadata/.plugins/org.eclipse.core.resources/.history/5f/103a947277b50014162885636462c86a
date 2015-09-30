@@ -1,0 +1,128 @@
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Random;
+import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicBoolean;
+
+public class Philosopher implements Runnable, Comparator {
+
+	static int numThreads = 2;
+	static ArrayList<Thread> threads = new ArrayList<Thread>();
+	static ArrayList<Philosopher> workers = new ArrayList<Philosopher>();
+	static AtomicBoolean[] chopsticks;
+	static boolean run = true;
+	static PrintWriter write;
+	public static void main(String[] args) throws InterruptedException, FileNotFoundException{
+		if(numThreads<1){
+			System.out.println("You can't use ");
+		}
+		write = new PrintWriter("out.txt");
+		System.out.println("start");
+		chopsticks = new AtomicBoolean[numThreads];
+		for(int i = 0; i < numThreads; i++)
+			chopsticks[i] = new AtomicBoolean(false);
+		// create all threads
+		for (int i = 0; i < numThreads; i++) {
+			Philosopher temp = new Philosopher(i);
+			workers.add(temp);
+			threads.add(new Thread(temp));
+		}
+
+		// start all threads
+		for (int i = 0; i < numThreads; i++) {
+			threads.get(i).start();
+		}
+		Scanner sc = new Scanner(System.in);
+		// wait for all threads to finish before continuing
+		sc.nextLine();
+		run = false;
+		write.flush();
+	}
+
+	int ID;
+	public Philosopher(int ID) {
+		this.ID = ID;
+	}
+
+	public enum philState {
+		THINKING, HUNGRY, EATING
+	}
+
+	@Override
+	public void run() {
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Random R = new Random();
+		philState state = philState.THINKING;
+		while (run) {
+			switch (state) {
+			case THINKING:
+				if (R.nextInt() % 100 < 30) {
+//					write.println(ID + "H");
+//					write.flush();
+					System.out.println(ID + "H");
+					state = philState.HUNGRY;
+				}
+				break;
+			case HUNGRY:
+//				if (sticksDown()) {
+//					synchronized(this){
+//						chopsticks[ID].set(true);
+//						chopsticks[(ID + 1) % numThreads].set(true);
+//					}
+//					state = philState.EATING;
+//				}
+				while(run){
+					while(sticksDown() && run);
+					if(!tryAcquire()){
+						break;
+					}
+					
+				}
+				if(!run)
+					break;
+//				write.println(ID + "E");
+//				write.flush();
+				System.out.println(ID + "E");
+				state = philState.EATING;
+				break;
+			case EATING:
+//				write.println(ID + "T");
+//				write.flush();
+				System.out.println(ID + "T");
+				chopsticks[ID].set(false);
+				chopsticks[(ID + 1) % numThreads].set(false);
+				state = philState.THINKING;
+				break;
+			default:
+				break;
+			}
+		}
+
+	}
+	synchronized boolean sticksDown(){
+		return chopsticks[(ID + 1) % numThreads].get() && chopsticks[ID].get(); 
+	}
+	synchronized boolean tryAcquire(){ 
+		boolean c1 = chopsticks[ID].getAndSet(true);
+		boolean c2 = chopsticks[(ID + 1) % numThreads].getAndSet(true);
+		if(c1 || c2){
+			chopsticks[(ID + 1) % numThreads].getAndSet(false); 
+			chopsticks[ID].getAndSet(false);
+			//System.out.println("fail");
+		}
+		//else System.out.println("success");
+		return !c1 && !c2;
+		
+	}
+	@Override
+	public int compare(Object arg0, Object arg1) {
+		return (((Philosopher)arg0).ID > ((Philosopher)arg1).ID);
+	}
+}

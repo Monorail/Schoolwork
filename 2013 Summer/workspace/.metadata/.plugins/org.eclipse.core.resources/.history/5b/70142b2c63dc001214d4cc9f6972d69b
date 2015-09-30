@@ -1,0 +1,7 @@
+
+public class Hand {
+	Card[] cards = new Card[5];
+	public void setCard(int pos, Card card){
+		cards[0] = card;
+	}
+}

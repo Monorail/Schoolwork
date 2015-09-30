@@ -1,0 +1,11 @@
+import java.net.Socket;
+
+
+public class herpaderp {
+	public static void main(String[] args) {
+		Socket MyClient;
+	    MyClient = new Socket("Alex-Acer", PortNumber);
+
+	}
+
+}

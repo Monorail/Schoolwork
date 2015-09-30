@@ -1,0 +1,276 @@
+#include "ListString.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+node *destroyList(node *head){//TA's code
+	node *temp = NULL;
+	while (head != NULL){
+		temp = head;
+		head = head->next;
+		free(temp);
+	}
+	return NULL;
+}
+node *createNode(char data){//prof's code
+	node *ptr = malloc(sizeof(node));
+	ptr->data = data;
+	ptr->next = NULL;
+	return ptr;
+}
+// Insert a new node at the end of the linked list.
+node *insert(node *head, char data){//TA code
+	node *ptr = NULL;
+
+	// If the list is empty, just create a new node and return.
+	if (head == NULL)
+		return createNode(data);
+
+	// Find the last node in the list.
+	for (ptr = head; ptr->next != NULL; ptr = ptr->next)
+		;
+
+	// Now 'ptr' is pointing to the last node. Set it up so its 'next' field
+	// points to the new node we're creating.
+	ptr->next = createNode(data);
+
+	// Return the head of the list so we preserve 'head' in main().
+	return head;
+}
+void printList(node *head){//TA's code
+	node *ptr = NULL;
+	if (head == NULL){
+		printf("(empty string)\n");
+		return;
+	}
+	for (ptr = head; ptr != NULL; ptr = ptr->next)
+		printf("%c", ptr->data);
+	printf("\n");
+}
+node *frontInsert(node *head, char data){//prof's code
+	node *ptr = createNode(data);
+	ptr->next = head;
+	return ptr;
+}
+
+
+node *deleteNext(node *head){
+	if(head == NULL)
+		return NULL;
+	if(head->next == NULL)
+		return head;
+	head->next=head->next->next;
+	return head;
+}
+
+
+node *replaceNext(node *head, char *str){
+	if(head == NULL)
+		return head;
+	if(head->next == NULL)
+		return head;
+	node *headEnd = head->next->next;
+	node *strBeg = stringToList(str);
+	printf("%c\n",strBeg->data);
+	head->next = strBeg;
+	node *strEnd=strBeg;
+	while(strEnd->next!=NULL)
+		strEnd=strEnd->next;
+	strEnd->next = headEnd;
+	return head;
+}
+int main(int argc, char **argv){
+
+	node *fuck = stringToList("Fuck");
+	fuck = replaceChar(fuck, 'c',"1234");
+	printList(fuck);
+/*
+	int debug = 0;
+	int mainCtr=0;
+	char command[1024];
+	char *str = "qwertyuiop";
+	char *input = argv[1];
+	FILE* ifp;
+	//printf("%s\n",input);
+	ifp = fopen(input, "rt");
+	if (ifp == NULL) {
+		fprintf(stderr, "Can't open input file in.list!\n");
+	}
+	int ctr= 0;
+	node *head;
+	fscanf(ifp,"%s", input);
+	head = stringToList(input);
+	
+	while(fscanf(ifp, "%s", input)!=EOF){
+		if (debug) printf("\n\ninput: \"%s\"\n",input);
+		if (debug)printf("before: ");
+		if (debug)printList(head);
+		if(!strcmp(input, "@")){
+			int intCtr = 0;
+			if (debug) printf("@(%d): replace\n",ctr++);
+			char key;
+			char repStr[1024];
+			fscanf(ifp," %c",&key);
+			fscanf(ifp,"%s", repStr);
+			if (debug) printf("char: |%c| str: |%s|\n",key,repStr);
+			head = replaceChar(head,key,repStr);
+		}
+		else if(!strcmp(input, "-")){
+			char key;
+			fscanf(ifp," %c",&key);
+			if (debug) printf("-(%d): delete instances of %c\n",ctr++,key);
+			head = deleteInstances(head,key);
+		}
+		else if(!strcmp(input, "~")){
+			if (debug) printf("~(%d): reverse\n",ctr++);
+			head = reverseList(head);
+		}
+		else if(!strcmp(input, "!")){
+			if (debug) printf("!(%d): print\n",ctr++);
+			printList(head);
+		}
+		if (debug)printf("after: ");
+		if (debug) printList(head);
+	}
+	*/
+	
+	return 0;
+}
+node *replaceChar(node *head, char key, char *str){
+	
+	if (head == NULL)
+		return NULL;
+	if (str == NULL){
+		printf("deleting key\n");
+	}
+	node *mainHead, *mainEnd, *repHead, *repEnd, *iterPtr;
+	//create a temp head so my code works
+	head = frontInsert(head, 's');
+	iterPtr = head;
+	printf("Entering while\n");
+	while(iterPtr->next != NULL){
+		printf("looking at %c\n",iterPtr->next->data);
+		if(iterPtr->next->data == key){
+			printf("Key found\n");
+			if(str!=NULL){
+				printf("str isnt null\n");
+				//replace key char with string
+				//keep track of start loc in LL
+				mainHead = iterPtr;
+				//record position after the replaced char
+				mainEnd = iterPtr->next->next;
+				printf("setting mainEnd\n");
+				//create LL from string
+				repHead = stringToList(str);
+				printf("Making rephead\n");
+				repEnd = repHead;
+				//find end of the replacement list
+				printf("Finding repEnd\n");
+				while(repEnd->next!=NULL)
+					repEnd=repEnd->next;
+				//attach second half of main list to end of string list
+				printf("Setting end point\n");
+				repEnd->next = mainEnd;
+				//update position of ptr
+				/**/
+				printf("setting iterpt\n");
+				iterPtr = mainEnd;
+				//link first part of list together
+				printf("setting mainhead->next\n");
+				mainHead->next = repHead;
+				printf("done with if\n");
+				
+			}else{
+				printf("deleting iterptr next\n");
+				iterPtr = deleteNext(iterPtr);
+			}
+			iterPtr=iterPtr->next;
+			printf("next\n");
+				
+		}
+		else{
+			printf("I am the walrus\n");
+			iterPtr = iterPtr->next;
+			printf("moving on\n");
+		}
+		printf("end result:\n");
+		printList(head);
+		printf("\n");
+	}
+	node *freeptr = head;
+	head = head->next;
+	free(freeptr);
+	return head;
+}
+
+node *reverseList(node *head){
+	node *ptr1 = NULL;
+	node *newHead=NULL;
+	for (ptr1 = head; ptr1 != NULL; ptr1 = ptr1->next){
+		newHead=frontInsert(newHead,ptr1->data);
+	}
+	
+	return newHead;
+}
+
+
+node *stringToList(char *str){
+	if (str == NULL){
+		printf("string is null");
+		return NULL;
+	}
+	int ctr = 0;
+	node *head = createNode(str[ctr++]);
+	while(str[ctr] != '\0'){
+		head = insert(head, str[ctr++]);
+	}
+	return head;
+}
+/*
+
+	int	i =0;
+	int ctr = 0;
+	if (str == NULL	|| str[0] == '\0' )
+		return NULL;
+	node *ptr1= NULL;//LL iterator
+	node *tempEnd= NULL;//last element of the LL to be inserted
+	node *endHolder= NULL;//element after the element to be replaced in main LL
+	node *tempBeg= NULL;//LL replacing key char
+	node *repHolder= NULL;//location of the key
+	if(head->data == key){
+		tempBeg = stringToList(str);
+		tempEnd=tempBeg;
+		while(tempEnd->next!=NULL){
+			tempEnd = tempEnd->next;
+		}
+		tempEnd->next = head->next;
+		head = tempBeg;
+	}
+	for (ptr1 = tempEnd->next,i =0; ptr1->next != NULL; ptr1 = ptr1->next)
+		printList(head);
+		if(ptr1->next->data==key){
+			tempBeg = stringToList(str);
+			tempEnd=tempBeg;
+			endHolder = ptr1->next->next;
+			while(tempEnd->next!=NULL){
+				tempEnd = tempEnd->next;
+			}
+			tempEnd->next = endHolder;
+			ptr1->next = tempBeg;
+			ptr1 = tempEnd;
+		}
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+

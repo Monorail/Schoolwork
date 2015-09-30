@@ -1,0 +1,12 @@
+import javax.swing.JFrame;
+import javax.swing.JScrollBar;
+
+
+public class ScrollBarDemo extends JFrame{
+private JScrollBar jscbHort = new JScrollBar(JScrollBar.HORIZONTAL);
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

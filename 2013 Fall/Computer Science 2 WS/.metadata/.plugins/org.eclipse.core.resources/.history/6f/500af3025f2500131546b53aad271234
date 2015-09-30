@@ -1,0 +1,9 @@
+import java.util.HashMap;
+
+
+public class brownies {
+	public static void main(String[] args) {
+		HashMap<Integer, Integer> h = new HashMap<Integer,Integer>();
+	}
+
+}

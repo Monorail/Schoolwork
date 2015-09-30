@@ -1,0 +1,71 @@
+-> Created new ArrayList of size 10.
+-> Created new ArrayList of size 10.
+
+-- LIST 1: --
+Sean
+Adam
+Antoniya
+Ashkan
+Grant
+
+-- LIST 2 (First Names): --
+Grant
+Ashkan
+Antoniya
+Adam
+Sean
+
+-- LIST 2 (Last Names): --
+Van Horn
+Paya
+Petkova
+Bouters
+Szumlanski
+
+-- COMBINED LISTS (First and Last Names): --
+Grant Van Horn
+Ashkan Paya
+Antoniya Petkova
+Adam Bouters
+Sean Szumlanski
+
+Adding Grant to L1 ...
+Adding Ashkan to L1 ...
+Adding Antoniya to L1 ...
+Adding Adam to L1 ...
+Adding Sean to L1 ...
+
+-- LIST 1: --
+Sean
+Adam
+Antoniya
+Ashkan
+Grant
+Grant
+Ashkan
+Antoniya
+Adam
+Sean
+-> Expanded ArrayList to size 21.
+
+-- LIST 1: --
+List of Names:
+Sean
+Adam
+Antoniya
+Ashkan
+Grant
+Grant
+Ashkan
+Antoniya
+Adam
+Sean
+
+-- LIST 1: --
+(empty list)
+
+-- LIST 1: --
+(empty list)
+
+-- LIST 2: --
+(empty list)

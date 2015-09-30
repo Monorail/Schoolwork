@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="javax.naming.SizeLimitExceededException"/>
+<fullyQualifiedTypeName name="Elf"/>
+<fullyQualifiedTypeName name="Elf.ElfState"/>
+<fullyQualifiedTypeName name="java.util.concurrent.Semaphore"/>
+<fullyQualifiedTypeName name="Santa.SantaState"/>
+</qualifiedTypeNameHistroy>

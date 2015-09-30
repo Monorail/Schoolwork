@@ -1,0 +1,6 @@
+int x, y, z;
+begin
+	x := 4 / (5-1);
+	write x;
+end.
+

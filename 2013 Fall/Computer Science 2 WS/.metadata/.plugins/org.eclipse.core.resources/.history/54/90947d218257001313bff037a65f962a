@@ -1,0 +1,77 @@
+//Alex Berliner
+//a2737438
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
+
+public class Maze {
+	static int[] disjointSet;
+	static int[] setRank;
+	static char[][] maze;
+
+//	public static void main(String args[]) {
+//		int f = 20;
+//		System.out.println(f);
+//		maze = create(f, f);
+//		solve(maze);
+//		TestCases.printMaze(maze);
+//	}
+
+	public static void solve(char[][] maze) {
+		move(maze, 1, 1);
+	}
+
+	public static boolean move(char[][] maze, int width, int height) {
+		int i = 0, j = 0;
+		//
+		for (int k = 0; k < 4; k++) {
+			if (k == 0) {
+				i = -1;
+				j = 0;
+			} else if (k == 1) {
+				i = 1;
+				j = 0;
+			} else if (k == 2) {
+				i = 0;
+				j = -1;
+			} else if (k == 3) {
+				i = 0;
+				j = 1;
+			}
+			
+			if (maze[width + i][height + j] == 'e')
+				return true;
+			
+			if (maze[width + i][height + j] == ' ') {
+				maze[width + i][height + j] = '.';
+				if (move(maze, width + i, height + j))
+					return true;
+				maze[width + i][height + j] = ' ';
+			}
+		}
+		return false;
+	}
+	public static double hoursSpent() {
+		return 2;
+	}
+
+	public static double difficultyRating() {
+		return 2;
+	}
+}
+
+// a simple class to store an ordered pair
+class wall {
+	static int wallNumber = 0;
+	int width, height;
+
+	public wall(int width, int height) {
+		this.width = width;
+		this.height = height;
+		wallNumber++;
+	}
+
+	public String toString() {
+		return "(" + width + "," + height + ")";
+	}
+}

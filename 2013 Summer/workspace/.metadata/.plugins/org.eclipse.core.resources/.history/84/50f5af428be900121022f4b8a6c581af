@@ -1,0 +1,36 @@
+import java.awt.BorderLayout;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
+
+import javax.swing.JFrame;
+import javax.swing.JScrollBar;
+
+
+public class ScrollBarDemo extends JFrame{
+	private JScrollBar jscbHort = new JScrollBar(JScrollBar.HORIZONTAL);
+	private JScrollBar jscbVert= new JScrollBar(JScrollBar.VERTICAL);
+	public static void main(String[] args) {
+		ScrollBarDemo frame = new ScrollBarDemo();
+		frame.setTitle("Sc");
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+		frame.setVisible(true);
+	}
+	public ScrollBarDemo(){
+		setLayout(new BorderLayout());
+		add(jscbVert,BorderLayout.EAST);
+		add(jscbHort,BorderLayout.SOUTH);
+		jscbHort.addAdjustmentListener(new AdjustmentListener() {
+			
+			@Override
+			public void adjustmentValueChanged(AdjustmentEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+		
+		
+	}
+
+}

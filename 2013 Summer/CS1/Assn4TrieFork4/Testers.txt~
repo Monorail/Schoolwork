@@ -1,0 +1,7 @@
+gcc Trie.c && ./a.out corpus01.txt input01.txt > myoutput01.txt && diff myoutput01.txt output01.txt 
+gcc Trie.c && ./a.out corpus02.txt input02.txt > myoutput02.txt && diff myoutput02.txt output02.txt 
+gcc Trie.c && ./a.out corpus03.txt input03.txt > myoutput03.txt && diff myoutput03.txt output03.txt 
+gcc Trie.c && ./a.out corpus04.txt input04.txt > myoutput04.txt && diff myoutput04.txt output04.txt 
+gcc Trie.c && ./a.out corpus05.txt input05.txt > myoutput05.txt && diff myoutput05.txt output05.txt 
+gcc Trie.c && ./a.out corpus06.txt input06.txt > myoutput06.txt && diff myoutput06.txt output06.txt 
+

@@ -1,0 +1,4 @@
+const s  3;
+begin
+	write x;
+end.

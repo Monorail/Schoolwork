@@ -1,0 +1,5 @@
+int x;
+begin
+	call derp;
+	x := 3-3;
+end.

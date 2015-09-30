@@ -1,0 +1,9 @@
+public class notmain {
+	public static void main(String[] args) {
+		int penis = 3;
+		System.out.println(penis++);
+		// Deck dick = new Deck();
+		// dick.printDeck();
+
+	}
+}

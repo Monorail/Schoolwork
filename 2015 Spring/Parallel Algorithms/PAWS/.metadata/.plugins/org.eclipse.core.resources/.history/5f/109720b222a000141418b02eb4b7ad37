@@ -1,0 +1,11 @@
+
+public class PrimeTester implements Runnable {
+	int ID;
+	public PrimeTester(int ID, Semaphore Sem){
+		this.ID = ID;
+	}
+	
+	public void run() {
+		
+	}
+}

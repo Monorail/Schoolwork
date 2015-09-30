@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1390844855 source:e:\dropbox\school\system software\vmproj\sysovm\vm_main.c
+	<stdio.h>
+	<stdlib.h>
+

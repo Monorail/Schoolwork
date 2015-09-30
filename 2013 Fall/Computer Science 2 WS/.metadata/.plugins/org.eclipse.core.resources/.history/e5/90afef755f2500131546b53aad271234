@@ -1,0 +1,12 @@
+import java.util.HashMap;
+
+
+public class brownies {
+	public static void main(String[] args) {
+		HashMap<Integer, Integer> h = new HashMap<Integer,Integer>();
+		h.put(1, 100);
+		h.put(2, 200);
+		System.out.println(h.get(1));
+	}
+
+}

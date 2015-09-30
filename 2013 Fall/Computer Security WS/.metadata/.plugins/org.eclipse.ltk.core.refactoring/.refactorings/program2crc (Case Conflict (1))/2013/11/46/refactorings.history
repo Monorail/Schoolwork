@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename type &apos;CRC_Calculator&apos; to &apos;crcfile&apos;&#x0A;- Original project: &apos;Program2CRC&apos;&#x0A;- Original element: &apos;CRC_Calculator&apos;&#x0A;- Renamed element: &apos;crcfile&apos;&#x0A;- Update references to refactored element&#x0A;- Update textual occurrences in comments and strings" description="Rename type &apos;CRC_Calculator&apos;" flags="589830" id="org.eclipse.jdt.ui.rename.type" input="/src&lt;{CRC_Calculator.java[CRC_Calculator" matchStrategy="1" name="crcfile" qualified="false" references="true" similarDeclarations="false" stamp="1384561379051" textual="false" version="1.0"/>
+</session>

@@ -1,0 +1,47 @@
+main(): str is fancy
+main(): str is fancy
+main(): str is wow
+main(): Done with scans
+main(): sentence made root
+main(): **Subtrie for fancy is:
+- wow (1)
+main(): ***End print***
+main(): **Subtrie for fancy is:
+- wow (2)
+main(): ***End print***
+main(): **Subtrie for wow is:
+- fancy (2)
+main(): ***End print***
+main(): Loop iter done
+main(): str is fancy
+main(): str is wow
+main(): str is wow
+main(): Done with scans
+main(): sentence made root
+main(): **Subtrie for fancy is:
+- wow (4)
+main(): ***End print***
+main(): **Subtrie for wow is:
+- fancy (3)
+main(): ***End print***
+main(): **Subtrie for wow is:
+- fancy (4)
+main(): ***End print***
+main(): Loop iter done
+main(): str is fancy
+main(): str is fancy
+main(): Done with scans
+main(): sentence made root
+main(): **Subtrie for fancy is:
+- wow (4)
+main(): ***End print***
+main(): **Subtrie for fancy is:
+- wow (4)
+main(): ***End print***
+main(): Loop iter done
+fancy (5)
+wow (3)
+fancy
+- wow (4)
+wow
+- fancy (4)

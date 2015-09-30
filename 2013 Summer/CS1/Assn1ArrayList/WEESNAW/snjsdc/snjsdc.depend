@@ -1,0 +1,6 @@
+# depslib dependency file v1.0
+1370387821 source:c:\dropbox\programming\c\arraylist\weesnaw\snjsdc\sdnkjadf.c
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+

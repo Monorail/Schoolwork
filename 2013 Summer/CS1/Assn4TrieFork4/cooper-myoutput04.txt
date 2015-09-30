@@ -1,0 +1,31 @@
+a (1)
+ab (1)
+abc (1)
+abcd (16)
+b (1)
+bc (1)
+bcd (1)
+c (1)
+cd (1)
+d (1)
+abcd
+- a (1)
+- ab (1)
+- abc (1)
+a
+- ab (1)
+- abc (1)
+- abcd (1)
+b
+- bc (1)
+- bcd (1)
+c
+- cd (1)
+d
+(EMPTY)
+e
+(INVALID STRING)
+ABCD
+- a (1)
+- ab (1)
+- abc (1)

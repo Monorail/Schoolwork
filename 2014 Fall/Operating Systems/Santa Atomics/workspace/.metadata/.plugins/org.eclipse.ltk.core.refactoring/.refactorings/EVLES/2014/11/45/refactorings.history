@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename field &apos;elfQueue&apos; in &apos;Santa&apos; to &apos;elfTroubleQueue&apos;&#x0D;&#x0A;- Original project: &apos;EVLES&apos;&#x0D;&#x0A;- Original element: &apos;Santa.elfQueue&apos;&#x0D;&#x0A;- Renamed element: &apos;Santa.elfTroubleQueue&apos;&#x0D;&#x0A;- Update references to refactored element&#x0D;&#x0A;- Update textual occurrences in comments and strings" delegate="false" deprecate="false" description="Rename field &apos;elfQueue&apos;" flags="589830" getter="false" id="org.eclipse.jdt.ui.rename.field" input="/src&lt;{Santa.java[Santa^elfQueue" name="elfTroubleQueue" references="true" setter="false" stamp="1415216809420" textual="false" version="1.0"/>
+</session>

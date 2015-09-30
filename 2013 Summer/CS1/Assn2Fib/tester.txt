@@ -1,0 +1,7 @@
+PROGRAM CALL: ./a.out 42 43 44 45
+
+F(42): 267914296
+F(43): 433494437
+-> Expanded memo capacity to 89.
+F(44): 701408733
+F(45): 1134903170

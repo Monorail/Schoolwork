@@ -1,0 +1,14 @@
+# depslib dependency file v1.0
+1369767936 source:c:\dropbox\programming\c\arraylist\cranberries.c
+	<stdio.h>
+	<stdlib.h>
+	"ArrayList.h"
+
+1368600352 c:\dropbox\programming\c\arraylist\arraylist.h
+
+1370023590 source:c:\dropbox\programming\c\arraylist\arraylist.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"ArrayList.h"
+

@@ -1,0 +1,15 @@
+import java.util.ArrayList;
+
+
+public class Main {
+	public static void main(String[] args) {
+		int numThreads=8;
+		
+
+		for (int i = 0 ; i < numPhil ; i++)
+			al.add(new Philosoraptor(al, i));
+        for (Philosoraptor p : al) new Thread(p).start();
+		
+	}
+
+}

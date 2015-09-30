@@ -1,0 +1,7 @@
+
+public class Card {
+	int face, suit;
+	public Card(int face, int suit){
+		
+	}
+}

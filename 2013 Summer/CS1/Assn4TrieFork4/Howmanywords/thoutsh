@@ -1,0 +1,25 @@
+I like cherry pie and chocolate pie
+main:
+I
+sub:
+
+I like cherry pie and chocolate pie
+main:
+I -> Like
+Like -> I
+
+I like cherry pie and chocolate pie
+main:
+I -> like, cherry
+like -> I, cherrry
+cherry-> I, like
+
+I like cherry pie and chocolate pie
+main:
+I -> like, cherry, pie
+like -> i, cherrry, pie
+cherry-> i, like, pie
+pie-> i, like, cherry
+
+
+

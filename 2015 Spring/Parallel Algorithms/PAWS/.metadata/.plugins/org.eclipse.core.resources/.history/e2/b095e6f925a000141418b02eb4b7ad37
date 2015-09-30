@@ -1,0 +1,17 @@
+import java.util.concurrent.Semaphore;
+
+
+public class PrimeTester implements Runnable {
+	int ID;
+	Semaphore sem;
+	int num;
+	public PrimeTester(int ID, Semaphore Sem, int num){
+		this.ID = ID;
+		this.sem = sem;
+		this.num = num;
+	}
+	
+	public void run() {
+		boolean isPrime = true;
+	}
+}

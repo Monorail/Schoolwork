@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item value="309" key="DIALOG_WIDTH"/>
+		<item value="105" key="DIALOG_Y_ORIGIN"/>
+		<item value="888" key="DIALOG_X_ORIGIN"/>
+		<item value="423" key="DIALOG_HEIGHT"/>
+		<item value="1|Sans|9.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item value="true" key="wrap"/>
+		<item value="false" key="casesensitive"/>
+		<item value="false" key="isRegEx"/>
+		<item value="false" key="incremental"/>
+		<item value="false" key="wholeword"/>
+		<item value="" key="selection"/>
+		<list key="findhistory">
+			<item value="system.out"/>
+			<item value="\n\n"/>
+			<item value="System.out.println(&quot;answer: &quot; + ans);"/>
+			<item value="30"/>
+			<item value="joining"/>
+			<item value="deleting"/>
+			<item value="removewall"/>
+			<item value="&quot;PASS&quot; : &quot;FAIL&quot;);"/>
+		</list>
+		<list key="replacehistory">
+			<item value="\n"/>
+			<item value=""/>
+			<item value="System.out.println(&quot;Runtime: &quot; + runtime1 + &quot;. n: &quot; + numElems);"/>
+			<item value="== false)"/>
+			<item value="== true)"/>
+			<item value="== true"/>
+			<item value="//System.out"/>
+			<item value="treap"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
+		<item value="252" key="DIALOG_Y_ORIGIN"/>
+		<item value="452" key="DIALOG_X_ORIGIN"/>
+	</section>
+</section>
